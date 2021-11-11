@@ -1,0 +1,15 @@
+name: mtdvdu
+description: "mtd vdu juju charm"
+summary: "mtd vdu juju charm"
+maintainer: joaoalegria <jpalegria@av.it.pt>
+tags:
+- misc
+- osm
+- vnf
+- network
+- vpn
+- nfv
+series:
+- bionic
+- focal
+subordinate: !!bool "false"

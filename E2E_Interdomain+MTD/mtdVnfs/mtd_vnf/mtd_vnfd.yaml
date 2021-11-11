@@ -1,0 +1,148 @@
+vnfd:
+  description: A VNF with 1 VDU able to provide the MTD functionality
+  df:
+  - id: default-df
+    instantiation-level:
+    - id: default-instantiation-level
+      vdu-level:
+      - number-of-instances: 1
+        vdu-id: mtd
+    vdu-profile:
+    - id: mtd
+      min-number-of-instances: 1
+    lcm-operations-configuration:
+      operate-vnf-op-config:
+        day1-2:
+        - id: mtd-vnf
+          config-access:
+            ssh-access:
+              default-user: debian
+              required: false
+          execution-environment-list:
+          - id: configure-vnf
+            external-connection-point-ref: mtd-eth1-ext
+            juju:
+              charm: mtdvdu
+          initial-config-primitive:
+          - execution-environment-ref: configure-vnf
+            name: config
+            parameter:
+            - name: ssh-hostname
+              value: <rw_mgmt_ip>
+            - name: ssh-username
+              value: debian
+            - name: ssh-password
+              value: debian
+            - name: mtd-mode
+              value: <mtd_mode>
+            seq: '1'
+          - execution-environment-ref: configure-vnf
+            name: configurebridge
+            seq: '2'
+          config-primitive:
+          - name: touch
+            execution-environment-ref: configure-vnf
+            parameter:
+            - data-type: STRING
+              default-value: /home/debian/touched
+              name: filename
+          - name: configurebridge
+            execution-environment-ref: configure-vnf
+          - name: getmtdinfo
+            execution-environment-ref: configure-vnf
+          - name: activatemtd
+            execution-environment-ref: configure-vnf
+            parameter:
+            - data-type: STRING
+              name: ip-client
+            - data-type: STRING
+              name: mac-client
+            - data-type: STRING
+              name: ip-server
+            - data-type: STRING
+              name: mac-server
+            - data-type: STRING
+              name: mac-gw-client
+            - data-type: STRING
+              name: mac-gw-server
+            - data-type: STRING
+              name: ip-mtd-client-internal
+            - data-type: STRING
+              name: ip-mtd-server-internal
+            - data-type: STRING
+              name: ip-mtd-client-public
+            - data-type: STRING
+              name: ip-mtd-server-public
+            - data-type: STRING
+              name: mac-mtd-client
+            - data-type: STRING
+              name: mac-mtd-server
+  ext-cpd:
+  - id: mtd-eth0-ext
+    # layer-protocol:
+    #   - ip-address
+    # protocol:
+    # - associated-layer-protocol: ip-address
+    #   address-data: 
+    #   - type: ip-address
+    #     l3-address-data:
+    #         ip-address-assignment: true
+    #         floating-ip-activated: true 
+    int-cpd:
+      cpd: mtd-eth0-int
+      vdu-id: mtd
+  - id: mtd-eth1-ext
+    int-cpd:
+      cpd: mtd-eth1-int
+      vdu-id: mtd
+  id: mtd-vnf
+  product-name: mtd-vnf
+  mgmt-cp: mtd-eth1-ext
+  sw-image-desc:
+  - id: "mtdDhcpTest"
+    image: "mtdDhcpTest"
+    name: "mtdDhcpTest"
+  vdu:
+  - cloud-init-file: cloud-init
+    id: mtd
+    name: mtd
+    int-cpd:
+    - id: mtd-eth0-int
+      # layer-protocol:
+      # - ip-address
+      # protocol:
+      # - associated-layer-protocol: ip-address
+      #   address-data: 
+      #   - type: ip-address
+      #     l3-address-data:
+      #         ip-address-assignment: true
+      #         floating-ip-activated: true 
+      port-security-enabled: false
+      port-security-disable-strategy: allow-address-pairs
+      virtual-network-interface-requirement:
+      - name: eth0
+        support-mandatory: true
+        virtual-interface:
+          type: PARAVIRT
+    - id: mtd-eth1-int
+      port-security-enabled: false
+      port-security-disable-strategy: allow-address-pairs
+      virtual-network-interface-requirement:
+      - name: eth1
+        support-mandatory: true
+        virtual-interface:
+          type: PARAVIRT
+    sw-image-desc: "mtdDhcpTest"
+    virtual-compute-desc: mtd-compute
+    virtual-storage-desc:
+    - mtd-storage
+  version: '1.0'
+  virtual-compute-desc:
+  - id: mtd-compute
+    virtual-cpu:
+      num-virtual-cpu: 1
+    virtual-memory:
+      size: 1.0
+  virtual-storage-desc:
+  - id: mtd-storage
+    size-of-storage: 10

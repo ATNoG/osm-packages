@@ -1,0 +1,80 @@
+touch:
+  description: "Touch a file on the VNF."
+  params:
+    filename:
+      description: "The name of the file to touch."
+      type: string
+      default: ""
+  required:
+  - filename
+
+getmtdinfo:
+  description: "Return the Ips and MACs of the relevant interfaces"
+
+configurebridge:
+  description: "Configures dynamically the bridge interface"
+
+activatemtd:
+  description: "Activates the MTD mechanism"
+  params:
+    ip-client:
+      description: "Service Client Ip"
+      type: string
+      default: ""
+    mac-client:
+      description: "Service Client MAC"
+      type: string
+      default: ""
+    ip-server:
+      description: "Service Server Ip"
+      type: string
+      default: ""
+    mac-server:
+      description: "Service Server MAC"
+      type: string
+      default: ""
+    mac-gw-client:
+      description: "Service Client GW MAC"
+      type: string
+      default: ""
+    mac-gw-server:
+      description: "Service Server GW MAC"
+      type: string
+      default: ""
+    ip-mtd-client-internal:
+      description: "MTD Client Internal IP"
+      type: string
+      default: ""
+    ip-mtd-server-internal:
+      description: "MTD Server Internal IP"
+      type: string
+      default: ""
+    ip-mtd-client-public:
+      description: "MTD Client Public IP"
+      type: string
+      default: ""
+    ip-mtd-server-public:
+      description: "MTD Server Public IP"
+      type: string
+      default: ""
+    mac-mtd-client:
+      description: "MTD Client MAC"
+      type: string
+      default: ""
+    mac-mtd-server:
+      description: "MTD Server MAC"
+      type: string
+      default: ""
+  required:
+    - ip-client
+    - mac-client
+    - ip-server
+    - mac-server
+    - mac-gw-client
+    - mac-gw-server
+    - ip-mtd-client-internal
+    - ip-mtd-server-internal
+    - ip-mtd-client-public
+    - ip-mtd-server-public
+    - mac-mtd-client
+    - mac-mtd-server

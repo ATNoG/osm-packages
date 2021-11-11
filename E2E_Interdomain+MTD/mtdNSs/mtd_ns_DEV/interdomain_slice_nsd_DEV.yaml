@@ -1,0 +1,40 @@
+nsd:
+  nsd:
+  - description: NS with the MTD VNF (DEV)
+    df:
+    - id: default-df
+      vnf-profile:
+      - id: '1'
+        virtual-link-connectivity:
+        - constituent-cpd-id:
+          - constituent-base-element-id: '2'
+            constituent-cpd-id: interdomain-eth0-ext
+          virtual-link-profile-id: mgmtnet
+        - constituent-cpd-id:
+          - constituent-base-element-id: '2'
+            constituent-cpd-id: interdomain-eth1-ext
+          virtual-link-profile-id: datanet
+        vnfd-id: interdomain-vnf
+      - id: '2'
+        virtual-link-connectivity:
+        - constituent-cpd-id:
+          - constituent-base-element-id: '1'
+            constituent-cpd-id: mtd-eth0-ext
+          virtual-link-profile-id: datanet
+        - constituent-cpd-id:
+          - constituent-base-element-id: '1'
+            constituent-cpd-id: mtd-eth1-ext
+          virtual-link-profile-id: mgmtnet
+        vnfd-id: mtd-vnf
+    id: mtd_nsd_DEV
+    name: mtd_nsd_DEV
+    version: '1.0'
+    virtual-link-desc:
+    - id: mgmtnet
+      mgmt-network: true
+      vim-network-name: mgmtnet
+    - id: datanet
+      vim-network-name: datanet
+    vnfd-id:
+    - mtd-vnf
+    - interdomain-vnf

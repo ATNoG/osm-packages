@@ -1,0 +1,9 @@
+#cloud-config
+password: debian
+chpasswd:
+  expire: False
+ssh_pwauth: True
+write_files:
+  - path: /tmp/test-1
+    content: |
+      cloudinited
