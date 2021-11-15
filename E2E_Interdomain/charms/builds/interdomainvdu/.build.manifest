@@ -26,7 +26,7 @@
     },
     {
       "branch": "refs/heads/main",
-      "rev": "7a4a1895c8258deee9244a195622b604b48f256c",
+      "rev": "314e331d662ddd0c26f30d585c3806bd3d4b9cee",
       "url": "interdomainvdu"
     }
   ],
@@ -264,7 +264,7 @@
     "metadata.yaml": [
       "interdomainvdu",
       "dynamic",
-      "362721193112a3545854d52199897c5901cdda7059f7b8a3dfcd9d07ff9b0586"
+      "28509711b18b9a390d1cb17d7c92f9f0fef602fdc1dee99a35ba2430c2f2014c"
     ],
     "reactive/__init__.py": [
       "layer:basic",
@@ -274,7 +274,7 @@
     "reactive/interdomainvdu.py": [
       "interdomainvdu",
       "static",
-      "36dc9cbdc98fb64fa6aed7fa05e2d92d3f9c7b8af2c7d30ce95ecbb1cbee60f2"
+      "e6bd0cb5a2876da807395b9217fa176af81adbbb0ae842211bb32ec07a728cd7"
     ],
     "reactive/sshproxy.py": [
       "interdomainvdu",
@@ -304,7 +304,7 @@
     "version": [
       "interdomainvdu",
       "dynamic",
-      "e282fcf0c6c5e040c934d3454a825ccda7774e4cdb7e16928604377a01ac215d"
+      "78c780c6a4d6bc042284bfa8fc3c94753f27fb3a03f3812d6260a054c4bb3ba7"
     ],
     "wheelhouse.txt": [
       "interdomainvdu",

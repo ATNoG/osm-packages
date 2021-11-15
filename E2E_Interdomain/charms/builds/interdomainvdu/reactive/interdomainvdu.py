@@ -193,6 +193,18 @@ def wireguard_server_configuration():
 
     log(wg_conf)
 
+    result = err = ''
+
+    try:
+        cmd = ['sudo sysctl -w net.ipv4.ip_forward = 1']
+        result, err = charms.sshproxy._run(cmd)
+
+        log(result)
+        set_flag('wireguard.ipforwarding.enabled')
+    except:
+        log('command failed:' + err)
+        set_flag('wireguard.server.config.failed')
+
     result=err = ''
     try:
         cmd = ['echo "{}" |sudo tee {}'.format(wg_conf,conf)]
@@ -207,11 +219,7 @@ def wireguard_server_configuration():
 @when('wireguard.start')
 @when_not('interdomainvdu.installed')
 def start_wireguard():
-    # if not config['wg_server']:
-    #     status_set('active','Wireguard Client installed and configured')
-    #     set_flag('interdomainvdu.installed')
 
-    # else:
     status_set('maintenance','Wireguard quick start')
     result=err = ''
     try:
