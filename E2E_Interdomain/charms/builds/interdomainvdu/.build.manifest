@@ -26,7 +26,7 @@
     },
     {
       "branch": "refs/heads/main",
-      "rev": "314e331d662ddd0c26f30d585c3806bd3d4b9cee",
+      "rev": "f8b2b1d95c47250bdb397ee0dae4a58742dbff9e",
       "url": "interdomainvdu"
     }
   ],
@@ -274,7 +274,7 @@
     "reactive/interdomainvdu.py": [
       "interdomainvdu",
       "static",
-      "e6bd0cb5a2876da807395b9217fa176af81adbbb0ae842211bb32ec07a728cd7"
+      "f0a42094ac3b8aaf787ceea8b0bb5575838a10805ef110eb3c34d7b7ebbf4b7c"
     ],
     "reactive/sshproxy.py": [
       "interdomainvdu",
@@ -304,7 +304,7 @@
     "version": [
       "interdomainvdu",
       "dynamic",
-      "78c780c6a4d6bc042284bfa8fc3c94753f27fb3a03f3812d6260a054c4bb3ba7"
+      "d849de95bb01569511764cc1a113d196c3c7a242f836747f7c915df2d490fac9"
     ],
     "wheelhouse.txt": [
       "interdomainvdu",
