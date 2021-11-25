@@ -585,3 +585,27 @@ def modifyTunnel():
     #     function_fail('command failed:' + err)
     # finally:
     #     log(result)
+
+@when('actions.routemgmt')
+@when('interdomainvdu.installed')
+def ipRouteMgmt():
+    result = err = ''
+    try:
+        try:
+            gwaddress = function_get('gw-address')
+            allowed_ips=function_get('allowed-ips')
+            action=function_get('action')
+
+            if action not in ["add","del"]:
+                function_fail('Action not supported')
+
+            cmd = ['sudo ip r {} {} via {}'.format(action, allowed_ips, gwaddress)]
+            result, err = charms.sshproxy._run(cmd)
+        except Exception as e:
+            log('command failed:' + str(e))
+        else:
+            set_flag('interdomainvdu.routemgmt.failed')
+    except:
+        function_fail('command failed:' + err)
+    finally:
+        log(result)
