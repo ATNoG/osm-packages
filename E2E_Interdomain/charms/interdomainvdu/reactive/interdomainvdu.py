@@ -592,9 +592,9 @@ def ipRouteMgmt():
     result = err = ''
     try:
         try:
-            gwaddress = function_get('gw-address')
             allowed_ips=function_get('allowed-ips')
             action=function_get('action')
+            gwaddress = function_get('gw-address')
 
             if action not in ["add","del"]:
                 function_fail('Action not supported')
