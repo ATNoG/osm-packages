@@ -26,7 +26,7 @@
     },
     {
       "branch": "refs/heads/main",
-      "rev": "f8b2b1d95c47250bdb397ee0dae4a58742dbff9e",
+      "rev": "7e02daffc8075f0f52283c9fe2521ace9f2d7c67",
       "url": "interdomainvdu"
     }
   ],
@@ -69,7 +69,7 @@
     "actions.yaml": [
       "interdomainvdu",
       "dynamic",
-      "e80d7f36dd6b37726b4f4ad1892eaad318f3cbb0225abf0c905dd2645f8f0901"
+      "8c27479837dd0c7998df02db613f10baefa24321b55e3de56a6f9a729055b365"
     ],
     "actions/addpeer": [
       "interdomainvdu",
@@ -102,6 +102,11 @@
       "214f7a2f52c914a4cbcd6c2cf26c40ab5cc0723db4d85d4fccba6f4cb28e711c"
     ],
     "actions/restart": [
+      "interdomainvdu",
+      "static",
+      "214f7a2f52c914a4cbcd6c2cf26c40ab5cc0723db4d85d4fccba6f4cb28e711c"
+    ],
+    "actions/routemgmt": [
       "interdomainvdu",
       "static",
       "214f7a2f52c914a4cbcd6c2cf26c40ab5cc0723db4d85d4fccba6f4cb28e711c"
@@ -154,7 +159,7 @@
     "config.yaml": [
       "interdomainvdu",
       "dynamic",
-      "dbe8a610b7e3a30c44268b58791d702fd4898260d1f18d4720bfc500f8d99e7b"
+      "8a924c4d91c436eeab4f0997eb1c0a583c6041b6efdce685dbdfc7e2e02ffb82"
     ],
     "copyright": [
       "layer:basic",
@@ -264,7 +269,7 @@
     "metadata.yaml": [
       "interdomainvdu",
       "dynamic",
-      "28509711b18b9a390d1cb17d7c92f9f0fef602fdc1dee99a35ba2430c2f2014c"
+      "36ed3f3201e06dd45d7901fea9cf2534c6d5cda73b7ef8e36a835049b1962294"
     ],
     "reactive/__init__.py": [
       "layer:basic",
@@ -274,7 +279,7 @@
     "reactive/interdomainvdu.py": [
       "interdomainvdu",
       "static",
-      "f0a42094ac3b8aaf787ceea8b0bb5575838a10805ef110eb3c34d7b7ebbf4b7c"
+      "4760b96d665e41e7770595f3b9a5dbaf9fe0bd4e797ef2a444d40e8b99650e8d"
     ],
     "reactive/sshproxy.py": [
       "interdomainvdu",
@@ -304,7 +309,7 @@
     "version": [
       "interdomainvdu",
       "dynamic",
-      "d849de95bb01569511764cc1a113d196c3c7a242f836747f7c915df2d490fac9"
+      "7adacf2d68bbcb1bd7913d70935bad97c7adc41b831b86ed6ffdc98cd4f9a965"
     ],
     "wheelhouse.txt": [
       "interdomainvdu",
@@ -326,15 +331,15 @@
       "dynamic",
       "c0ee8eca2c582d29c3c2ec6e2c4f703d1b7f1fb10bc72317355a746057e7346c"
     ],
-    "wheelhouse/Tempita-0.4.tar.gz": [
+    "wheelhouse/Tempita-0.5.2.tar.gz": [
       "__pip__",
       "dynamic",
-      "abf66d20932f1875a9c290345f19f35dad9031d4a9397de242a2b34e87ccddb5"
+      "cacecf0baa674d356641f1d406b8bff1d756d739c46b869a54de515d08e6fc9c"
     ],
-    "wheelhouse/charmhelpers-0.20.23.tar.gz": [
+    "wheelhouse/charmhelpers-0.20.24.tar.gz": [
       "interdomainvdu",
       "dynamic",
-      "59a9776594e91cd3e3e000043f8668b4d7b279422dbb17e320f01dc16385b80e"
+      "86295d6a853b6e16e3ed49e900fc47fc38192a5aa95f31b07f0db54ed8ec8e4b"
     ],
     "wheelhouse/charms.reactive-1.4.1.tar.gz": [
       "interdomainvdu",

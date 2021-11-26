@@ -26,7 +26,7 @@
     },
     {
       "branch": "refs/heads/main",
-      "rev": "26618a85b8ff023f0fea3b39beb315a5deb9f968",
+      "rev": "7e02daffc8075f0f52283c9fe2521ace9f2d7c67",
       "url": "mtdvdu"
     }
   ],
@@ -299,7 +299,7 @@
     "version": [
       "mtdvdu",
       "dynamic",
-      "ad813f72cca057bbc8081706db75b1202d936d5c2bd99023e62e6fdf2f806528"
+      "7adacf2d68bbcb1bd7913d70935bad97c7adc41b831b86ed6ffdc98cd4f9a965"
     ],
     "wheelhouse.txt": [
       "mtdvdu",
@@ -321,15 +321,15 @@
       "dynamic",
       "c0ee8eca2c582d29c3c2ec6e2c4f703d1b7f1fb10bc72317355a746057e7346c"
     ],
-    "wheelhouse/Tempita-0.4.tar.gz": [
+    "wheelhouse/Tempita-0.5.2.tar.gz": [
       "__pip__",
       "dynamic",
-      "abf66d20932f1875a9c290345f19f35dad9031d4a9397de242a2b34e87ccddb5"
+      "cacecf0baa674d356641f1d406b8bff1d756d739c46b869a54de515d08e6fc9c"
     ],
-    "wheelhouse/charmhelpers-0.20.23.tar.gz": [
+    "wheelhouse/charmhelpers-0.20.24.tar.gz": [
       "mtdvdu",
       "dynamic",
-      "59a9776594e91cd3e3e000043f8668b4d7b279422dbb17e320f01dc16385b80e"
+      "86295d6a853b6e16e3ed49e900fc47fc38192a5aa95f31b07f0db54ed8ec8e4b"
     ],
     "wheelhouse/charms.reactive-1.4.1.tar.gz": [
       "mtdvdu",
