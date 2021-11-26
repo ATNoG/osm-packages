@@ -83,6 +83,7 @@
 
 "getvnfinfo":
   "description": "Returns the VNF's tunnel info"
+
 "modifytunnel":
   "description": "Updates the bandwidth of the tunnel"
   "params":
@@ -92,23 +93,3 @@
       "default": "100"
   "required":
   - "bandwidth"
-"routemgmt":
-  "description": "Enables the addition or the removal of routes via IP route"
-  "params":
-    "allowed-ips":
-      "type": "string"
-      "default": "127.0.0.1/24"
-      "description": "Network/Mask information"
-    "gw-address":
-      "type": "string"
-      "default": "127.0.0.1"
-      "description": "Gateway address"
-    "action":
-      "type": "string"
-      "default": "add"
-      "description": "Action to be performed by the ip route can either be an add\
-        \ or a delete"
-  "required":
-  - "allowed-ips"
-  - "gw-address"
-  - "action"

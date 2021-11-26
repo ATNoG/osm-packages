@@ -25,8 +25,8 @@
       "url": "layer:vnfproxy"
     },
     {
-      "branch": "(no branch)",
-      "rev": "433b172fe16c73419ae967a6d3eff7a34f561916",
+      "branch": "refs/heads/main",
+      "rev": "2dc687aa3711465a4b4db4821b6c939d5eb45240",
       "url": "interdomainvdu"
     }
   ],
@@ -69,7 +69,7 @@
     "actions.yaml": [
       "interdomainvdu",
       "dynamic",
-      "8c27479837dd0c7998df02db613f10baefa24321b55e3de56a6f9a729055b365"
+      "e80d7f36dd6b37726b4f4ad1892eaad318f3cbb0225abf0c905dd2645f8f0901"
     ],
     "actions/addpeer": [
       "interdomainvdu",
@@ -309,7 +309,7 @@
     "version": [
       "interdomainvdu",
       "dynamic",
-      "93ece00fa85c1e0211e7b7e666a7eb33ea62a473eeb083e59288dac8f1dbec49"
+      "cc3df227c70d44b65c4aaf4853523f292d61177f85be110feaa0f708b048a569"
     ],
     "wheelhouse.txt": [
       "interdomainvdu",
