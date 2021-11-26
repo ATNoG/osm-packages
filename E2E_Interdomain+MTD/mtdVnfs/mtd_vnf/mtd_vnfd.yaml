@@ -54,29 +54,29 @@ vnfd:
             execution-environment-ref: configure-vnf
             parameter:
             - data-type: STRING
-              name: ip-client
+              name: ip-peer1
             - data-type: STRING
-              name: mac-client
+              name: mac-peer1
             - data-type: STRING
-              name: ip-server
+              name: ip-peer2
             - data-type: STRING
-              name: mac-server
+              name: mac-peer2
             - data-type: STRING
-              name: mac-gw-client
+              name: mac-gw-peer1
             - data-type: STRING
-              name: mac-gw-server
+              name: mac-gw-peer2
             - data-type: STRING
-              name: ip-mtd-client-internal
+              name: ip-mtd-peer1-internal
             - data-type: STRING
-              name: ip-mtd-server-internal
+              name: ip-mtd-peer2-internal
             - data-type: STRING
-              name: ip-mtd-client-public
+              name: ip-mtd-peer1-public
             - data-type: STRING
-              name: ip-mtd-server-public
+              name: ip-mtd-peer2-public
             - data-type: STRING
-              name: mac-mtd-client
+              name: mac-mtd-peer1
             - data-type: STRING
-              name: mac-mtd-server
+              name: mac-mtd-peer2
   ext-cpd:
   - id: mtd-eth0-ext
     # layer-protocol:
@@ -99,9 +99,9 @@ vnfd:
   product-name: mtd-vnf
   mgmt-cp: mtd-eth1-ext
   sw-image-desc:
-  - id: "mtdDhcpTest"
-    image: "mtdDhcpTest"
-    name: "mtdDhcpTest"
+  - id: "mtd-wg"
+    image: "mtd-wg"
+    name: "mtd-wg"
   vdu:
   - cloud-init-file: cloud-init
     id: mtd
@@ -132,7 +132,7 @@ vnfd:
         support-mandatory: true
         virtual-interface:
           type: PARAVIRT
-    sw-image-desc: "mtdDhcpTest"
+    sw-image-desc: "mtd-wg"
     virtual-compute-desc: mtd-compute
     virtual-storage-desc:
     - mtd-storage

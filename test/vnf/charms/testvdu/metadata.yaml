@@ -1,0 +1,21 @@
+# Copyright 2020 David Garcia
+# See LICENSE file for licensing details.
+name: sshproxy
+description: |
+  This is a basic example of an SSHProxy Charm for OSM
+summary: |
+  This charm should be used as a base for any Proxy Charm (SSH based)
+series:
+  - focal
+  - bionic
+  - xenial
+# - kubernetes
+# deployment:
+#    mode: operator
+peers:
+  proxypeer:
+    interface: proxypeer
+tags:
+  - osm
+  - proxycharm
+  - ssh

@@ -10,10 +10,3 @@ netslice-subnet:
   - member-vnf-index: "2"
     additionalParams:
       mtd_mode: "3"  
-  vnf:
-  - member-vnf-index: "2"
-    vdu:
-    - id: mtd
-      interface:
-      - name: eth0
-        floating-ip-required: true

@@ -1,0 +1,4 @@
+sshproxy:
+    ssh-hostname: 10.0.13.13
+    ssh-username: ubuntu
+    ssh-password: password

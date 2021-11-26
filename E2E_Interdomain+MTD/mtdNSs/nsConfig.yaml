@@ -4,15 +4,7 @@ additionalParamsForVnf:
     tunnel_address: "10.100.100.1/24"
     tunnel_id: "test"
     vsi_id: "10"
-    bandwidth: "1000"
     use_data_interfaces: "false"
 - member-vnf-index: "2"
   additionalParams:
     mtd_mode: "3"
-vnf:
-- member-vnf-index: "2"
-  vdu:
-  - id: mtd
-    interface:
-    - name: eth0
-      floating-ip-required: true

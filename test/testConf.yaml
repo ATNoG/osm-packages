@@ -1,0 +1,5 @@
+vnf:
+  - member-vnf-index: '1'
+    internal-vld:
+      - name: testVld
+        vim-network-name: proj_net

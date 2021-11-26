@@ -17,64 +17,64 @@ configurebridge:
 activatemtd:
   description: "Activates the MTD mechanism"
   params:
-    ip-client:
-      description: "Service Client Ip"
+    ip-peer1:
+      description: "Service peer1 Ip"
       type: string
       default: ""
-    mac-client:
-      description: "Service Client MAC"
+    mac-peer1:
+      description: "Service peer1 MAC"
       type: string
       default: ""
-    ip-server:
-      description: "Service Server Ip"
+    ip-peer2:
+      description: "Service peer2 Ip"
       type: string
       default: ""
-    mac-server:
-      description: "Service Server MAC"
+    mac-peer2:
+      description: "Service peer2 MAC"
       type: string
       default: ""
-    mac-gw-client:
-      description: "Service Client GW MAC"
+    mac-gw-peer1:
+      description: "Service peer1 GW MAC"
       type: string
       default: ""
-    mac-gw-server:
-      description: "Service Server GW MAC"
+    mac-gw-peer2:
+      description: "Service peer2 GW MAC"
       type: string
       default: ""
-    ip-mtd-client-internal:
-      description: "MTD Client Internal IP"
+    ip-mtd-peer1-internal:
+      description: "MTD peer1 Internal IP"
       type: string
       default: ""
-    ip-mtd-server-internal:
-      description: "MTD Server Internal IP"
+    ip-mtd-peer2-internal:
+      description: "MTD peer2 Internal IP"
       type: string
       default: ""
-    ip-mtd-client-public:
-      description: "MTD Client Public IP"
+    ip-mtd-peer1-public:
+      description: "MTD peer1 Public IP"
       type: string
       default: ""
-    ip-mtd-server-public:
-      description: "MTD Server Public IP"
+    ip-mtd-peer2-public:
+      description: "MTD peer2 Public IP"
       type: string
       default: ""
-    mac-mtd-client:
-      description: "MTD Client MAC"
+    mac-mtd-peer1:
+      description: "MTD peer1 MAC"
       type: string
       default: ""
-    mac-mtd-server:
-      description: "MTD Server MAC"
+    mac-mtd-peer2:
+      description: "MTD peer2 MAC"
       type: string
       default: ""
   required:
-    - ip-client
-    - mac-client
-    - ip-server
-    - mac-server
-    - mac-gw-client
-    - mac-gw-server
-    - ip-mtd-client-internal
-    - ip-mtd-server-internal
-    - ip-mtd-client-public
-    - ip-mtd-server-public
-    - mac-mtd-client
-    - mac-mtd-server
+    - ip-peer1
+    - mac-peer1
+    - ip-peer2
+    - mac-peer2
+    - mac-gw-peer1
+    - mac-gw-peer2
+    - ip-mtd-peer1-internal
+    - ip-mtd-peer2-internal
+    - ip-mtd-peer1-public
+    - ip-mtd-peer2-public
+    - mac-mtd-peer1
+    - mac-mtd-peer2

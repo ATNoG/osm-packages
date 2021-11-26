@@ -202,43 +202,47 @@ def activatemtd():
             function_set({'output': result, "errors": err})
 
         try:
-            ip_client=function_get('ip-client')
-            mac_client=function_get('mac-client')
-            ip_server=function_get('ip-server')
-            mac_server=function_get('mac-server')
-            mac_gw_client=function_get('mac-gw-client')
-            mac_gw_server=function_get('mac-gw-server')
-            ip_mtd_client_internal=function_get('ip-mtd-client-internal')
-            ip_mtd_server_internal=function_get('ip-mtd-server-internal')
-            ip_mtd_client_public=function_get('ip-mtd-client-public')
-            ip_mtd_server_public=function_get('ip-mtd-server-public')
-            mac_mtd_client=function_get('mac-mtd-client')
-            mac_mtd_server=function_get('mac-mtd-server')
+            ip_peer1=function_get('ip-peer1')
+            mac_peer1=function_get('mac-peer1')
+            ip_peer2=function_get('ip-peer2')
+            mac_peer2=function_get('mac-peer2')
+            mac_gw_peer1=function_get('mac-gw-peer1')
+            mac_gw_peer2=function_get('mac-gw-peer2')
+            ip_mtd_peer1_internal=function_get('ip-mtd-peer1-internal')
+            ip_mtd_peer2_internal=function_get('ip-mtd-peer2-internal')
+            ip_mtd_peer1_public=function_get('ip-mtd-peer1-public')
+            ip_mtd_peer2_public=function_get('ip-mtd-peer2-public')
+            mac_mtd_peer1=function_get('mac-mtd-peer1')
+            mac_mtd_peer2=function_get('mac-mtd-peer2')
 
-            real_port=config["mtd-real-port"]
+            real_port_peer1=config["real-port-peer1"]
+            real_port_peer2=config["real-port-peer2"]
             mode=config["mtd-mode"]
             interval=config["mtd-interval"]
             offset=config["mtd-offset"]
-            secret=config["mtd-secret"]
+            secret_peer1=config["secret-peer1"]
+            secret_peer2=config["secret-peer2"]
 
             myConfig={
-                "ip_client":ip_client,
-                "mac_client":mac_client,
-                "ip_server":ip_server,
-                "mac_server":mac_server,
-                "mac_gw_client":mac_gw_client,
-                "mac_gw_server":mac_gw_server,
-                "ip_mtd_client_internal":ip_mtd_client_internal,
-                "ip_mtd_server_internal":ip_mtd_server_internal,
-                "ip_mtd_client_public":ip_mtd_client_public,
-                "ip_mtd_server_public":ip_mtd_server_public,
-                "mac_mtd_client":mac_mtd_client,
-                "mac_mtd_server":mac_mtd_server,
-                "real_port":real_port,
+                "ip_peer1":ip_peer1,
+                "mac_peer1":mac_peer1,
+                "ip_peer2":ip_peer2,
+                "mac_peer2":mac_peer2,
+                "mac_gw_peer1":mac_gw_peer1,
+                "mac_gw_peer2":mac_gw_peer2,
+                "ip_mtd_peer1_internal":ip_mtd_peer1_internal,
+                "ip_mtd_peer2_internal":ip_mtd_peer2_internal,
+                "ip_mtd_peer1_public":ip_mtd_peer1_public,
+                "ip_mtd_peer2_public":ip_mtd_peer2_public,
+                "mac_mtd_peer1":mac_mtd_peer1,
+                "mac_mtd_peer2":mac_mtd_peer2,
+                "real_port_peer1":real_port_peer1,
+                "real_port_peer2":real_port_peer2,
                 "mode":mode,
                 "interval":interval,
                 "offset":offset,
-                "secret":secret
+                "secret_peer1":secret_peer1,
+                "secret_peer2":secret_peer2
             }
 
             log("MTD config: "+json.dumps(myConfig))
