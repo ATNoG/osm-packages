@@ -491,12 +491,17 @@ def getVnfIp():
 
 
 
-        # if use_data_interfaces:
-        #     if len(interfacesAndIps)==3:
-
-        #         vnfMgmtIp=vnfMgmtIp.split("/")[0]
-        #         tunnelAddress=tunnelAddress.split("/")[0]
-
+        use_data_interfaces = config['use_data_interfaces']
+        if use_data_interfaces:
+            if len(interfacesAndIps)==3:
+                vnfMgmtIp=vnfMgmtIp.split("/")[0]
+                tunnelAddress=tunnelAddress.split("/")[0]
+                vnfIp=str(interfacesAndIps["ens4"])
+                key="ens4"
+                config["data_address"]=vnfIp
+                config["data_interface"]="ens4"
+                db.set("data_interface", "ens4")
+                db.flush()
         #         for key, value in interfacesAndIps.items():
         #             if str(value) != str(vnfMgmtIp) and str(value) != str(tunnelAddress):
         #                 log("found data interface: "+key+", ip: "+value)
@@ -506,7 +511,6 @@ def getVnfIp():
         #                 db.set("data_interface", str(key))
         #                 db.flush()
         #                 break
-
         #         try:
         #             log("using interface: "+key)
         #             cmd = ['sudo tc qdisc add dev {} root cake bandwidth {}mbit'.format(key, bandwidth)]
@@ -516,40 +520,33 @@ def getVnfIp():
         #             log('command failed:' + result)
         #             log('command failed:' + err)
         #             set_flag('interdomainvdu.tccakeaddinterface.failed')
-
-        #         result=json.dumps({"vsiId":vsiId,"publicKey": publicKey,"vnfIp":vnfIp, "tunnelId":tunnelId,"vnfMAC":interfacesAndMACs[key], "gwMAC":gwMAC})
-        #     else:
-        #         log('Expecting 3 network interfaces')
-        #         function_fail('Expecting 3 network interfaces')
-
-        # else:
-        vnfMgmtIp=vnfMgmtIp.split("/")[0]
-        # tunnelAddress=tunnelAddress.split("/")[0]
-
-        # for key, value in interfacesAndIps.items():
-        #     if str(value) == str(vnfMgmtIp):
-        #         log("found data interface: "+key+", ip: "+value)
-        #         vnfIp=str(value)
-        #         config["data_address"]=vnfIp
-        #         config["data_interface"]=str(key)
-        #         db.set("data_interface", str(key))
-        #         db.flush()
-        #         break
-
-        interfacesAndIps=list(interfacesAndIps.items())
-
-        log("using interface: "+str(interfacesAndIps[0])+" with MAC "+interfacesAndMACs[interfacesAndIps[0][0]])
-        # try:
-        #     cmd = ['sudo tc qdisc add dev {} root cake bandwidth {}mbit'.format(key, bandwidth)]
-        #     result, err = charms.sshproxy._run(cmd)
-        #     log("enabled tc-cake to interface")
-        # except:
-        #     log('command failed:' + result)
-        #     log('command failed:' + err)
-        #     set_flag('interdomainvdu.tccakeaddinterface.failed')
-
-        result=json.dumps({"vsiId":vsiId,"publicKey": publicKey,"vnfIp":vnfMgmtIp, "tunnelId":tunnelId, "vnfMAC":interfacesAndMACs[interfacesAndIps[0][0]], "gwMAC":gwMAC})
-
+                result=json.dumps({"vsiId":vsiId,"publicKey": publicKey,"vnfIp":vnfIp, "tunnelId":tunnelId,"vnfMAC":interfacesAndMACs[key], "gwMAC":gwMAC})
+            else:
+                log('Expecting 3 network interfaces')
+                function_fail('Expecting 3 network interfaces')
+        else:
+            vnfMgmtIp=vnfMgmtIp.split("/")[0]
+            tunnelAddress=tunnelAddress.split("/")[0]
+            # for key, value in interfacesAndIps.items():
+            #     if str(value) == str(vnfMgmtIp):
+            #         log("found data interface: "+key+", ip: "+value)
+            #         vnfIp=str(value)
+            #         config["data_address"]=vnfIp
+            #         config["data_interface"]=str(key)
+            #         db.set("data_interface", str(key))
+            #         db.flush()
+            #         break
+            interfacesAndIps=list(interfacesAndIps.items())
+            log("using interface: "+str(interfacesAndIps[0])+" with MAC "+interfacesAndMACs[interfacesAndIps[0][0]])
+            # try:
+            #     cmd = ['sudo tc qdisc add dev {} root cake bandwidth {}mbit'.format(key, bandwidth)]
+            #     result, err = charms.sshproxy._run(cmd)
+            #     log("enabled tc-cake to interface")
+            # except:
+            #     log('command failed:' + result)
+            #     log('command failed:' + err)
+            #     set_flag('interdomainvdu.tccakeaddinterface.failed')
+            result=json.dumps({"vsiId":vsiId,"publicKey": publicKey,"vnfIp":vnfMgmtIp, "tunnelId":tunnelId, "vnfMAC":interfacesAndMACs[interfacesAndIps[0][0]], "gwMAC":gwMAC})
             
     except:
         function_fail('command failed:' + err)

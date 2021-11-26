@@ -10,7 +10,7 @@ tags:
 - vpn
 - nfv
 series:
-- trusty
+- xenial
 - bionic
 - focal
 subordinate: !!bool "false"

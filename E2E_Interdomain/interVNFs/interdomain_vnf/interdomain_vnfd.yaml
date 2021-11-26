@@ -71,6 +71,16 @@ vnfd:
             - data-type: STRING
               default-value: "30"
               name: bandwidth
+          - name: routemgmt
+            execution-environment-ref: configure-vnf
+            parameter:
+            - data-type: STRING
+              name: allowed-ips
+            - data-type: STRING
+              name: gw-address
+            - data-type: STRING
+              name: action
+
   ext-cpd:
   - id: interdomain-eth0-ext  
     int-cpd:
