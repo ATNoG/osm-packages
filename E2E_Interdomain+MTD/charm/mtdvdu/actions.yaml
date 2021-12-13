@@ -78,3 +78,19 @@ activatemtd:
     - ip-mtd-peer2-public
     - mac-mtd-peer1
     - mac-mtd-peer2
+
+modifymtd:
+  description: "Modifies the MTD mechanism"
+  params:
+    interval: 
+      type: int
+      default: !!int "1000"
+      description: "MTD mutation interval in milliseconds."
+    timestamp:
+      description: "Scheduled Timestamp when the MTD mechanism is activated"
+      type: string
+      default: "1639423614.6099408"
+  required:
+    - interval
+    - timestamp
+    

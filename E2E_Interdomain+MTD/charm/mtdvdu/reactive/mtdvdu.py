@@ -264,3 +264,21 @@ def activatemtd():
         log(result)
     
     clear_flag('actions.activatemtd')
+
+#####
+
+@when('actions.modifymtd')
+def modifymtd():
+    result=err = ''
+    try:
+        timestamp = action_get('timestamp')
+        interval = action_get('interval')
+        cmd = ['/opt/mtd-totp/change_interval.py {} {}'.format(interval,timestamp)]
+        result, err = charms.sshproxy._run(cmd)
+    except:
+        action_fail('command failed:' + err)
+    else:
+        action_set({'output': result, "errors": err})
+    finally:
+        clear_flag('actions.touch')
+
