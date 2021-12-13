@@ -321,10 +321,10 @@
       "dynamic",
       "c0ee8eca2c582d29c3c2ec6e2c4f703d1b7f1fb10bc72317355a746057e7346c"
     ],
-    "wheelhouse/Tempita-0.4.tar.gz": [
+    "wheelhouse/Tempita-0.5.2.tar.gz": [
       "__pip__",
       "dynamic",
-      "abf66d20932f1875a9c290345f19f35dad9031d4a9397de242a2b34e87ccddb5"
+      "cacecf0baa674d356641f1d406b8bff1d756d739c46b869a54de515d08e6fc9c"
     ],
     "wheelhouse/charmhelpers-0.20.24.tar.gz": [
       "mtdvdu",
