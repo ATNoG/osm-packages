@@ -15,9 +15,9 @@ from charmhelpers.core.hookenv import (
     config,
     log,
     status_set,
-    function_fail,
-    function_set,
-    function_get
+    action_fail,
+    action_set,
+    action_get
 )
 
 # sudo ethtool -s ens3 speed 100 duplex full autoneg off
@@ -172,7 +172,7 @@ def wireguard_server_configuration():
         cmd = ['sudo cat {}'.format(filename)]
         result, err = charms.sshproxy._run(cmd)
     except:
-        log('command failed:' + err)
+        log('command failed:' + result+"|"+err)
         set_flag('interdomainvdu.load.keys.failed')
     finally:
         key=result
@@ -196,13 +196,13 @@ def wireguard_server_configuration():
     result = err = ''
 
     try:
-        cmd = ['sudo sysctl -w net.ipv4.ip_forward = 1']
+        cmd = ['sudo sysctl -w net.ipv4.ip_forward=1']
         result, err = charms.sshproxy._run(cmd)
 
         log(result)
         set_flag('wireguard.ipforwarding.enabled')
     except:
-        log('command failed:' + err)
+        log('command failed:' + result+"|"+err)
         set_flag('wireguard.server.config.failed')
 
     result=err = ''
@@ -212,7 +212,7 @@ def wireguard_server_configuration():
         log(result)
         set_flag('wireguard.start')
     except:
-        log('command failed:' + err)
+        log('command failed:' + result+"|"+err)
         set_flag('wireguard.server.config.failed')
     
 
@@ -266,13 +266,13 @@ def start_wireguard():
 def touch():
     result=err = ''
     try:
-        filename = function_get('filename')
+        filename = action_get('filename')
         cmd = ['touch {}'.format(filename)]
         result, err = charms.sshproxy._run(cmd)
     except:
-        function_fail('command failed:' + err)
+        action_fail('command failed:' + err)
     else:
-        function_set({'output': result, "errors": err})
+        action_set({'output': result, "errors": err})
     finally:
         clear_flag('actions.touch')
 
@@ -287,19 +287,19 @@ def addpeer():
         cmd = ['sudo wg-quick down {}'.format(config['forward_interface'])]
         result, err = charms.sshproxy._run(cmd)
     except:
-        function_fail('command failed:' + err)
+        action_fail('command failed:' + err)
         log('command failed:' + err)
     else:
-        function_set({'output': result, "errors": err})
+        action_set({'output': result, "errors": err})
     finally:
         log(result)
 
     result=err = ''
 
     try:
-        peer_key= function_get('peer_key')
-        peer_endpoint = function_get('peer_endpoint')
-        peer_network= function_get('peer_network')
+        peer_key= action_get('peer_key')
+        peer_endpoint = action_get('peer_endpoint')
+        peer_network= action_get('peer_network')
   
         conf="/etc/wireguard/"+config['forward_interface']+".conf"
         wgconf="\n\n[Peer]\nPublicKey= "+peer_key+"\nEndpoint = "+peer_endpoint+":"+str(config['listen_port'])+"\nAllowedIPs = "+peer_network+"\n\n"
@@ -314,9 +314,9 @@ def addpeer():
         log(cmd)
         result, err = charms.sshproxy._run(cmd)
     except:
-        function_fail('command failed:' + err)
+        action_fail('command failed:' + err)
     else:
-        function_set({'output': result, "errors": err})
+        action_set({'output': result, "errors": err})
     finally:
         log(result)
     
@@ -324,10 +324,10 @@ def addpeer():
         cmd = ['sudo wg-quick up {}'.format(config['forward_interface'])]
         result, err = charms.sshproxy._run(cmd)
     except:
-        function_fail('command failed:' + err)
+        action_fail('command failed:' + err)
         log('command failed:' + err)
     else:
-        function_set({'output': result, "errors": err})
+        action_set({'output': result, "errors": err})
     finally:
         log(result)
 
@@ -346,7 +346,7 @@ def sendVnfIp():
 #         tunnelAddress = config['tunnel_address']
 #         tunnelId = config['tunnel_id']
 #         vsiId = config['vsi_id']
-#         vsEndpoint = function_get('vsEndpoint')
+#         vsEndpoint = action_get('vsEndpoint')
 
 #         bandwidth = config['bandwidth']
 
@@ -408,7 +408,7 @@ def sendVnfIp():
 #                 result, err = charms.sshproxy._run(cmd)
 #             else:
 #                 log('Expecting 3 network interfaces')
-#                 function_fail('Expecting 3 network interfaces')
+#                 action_fail('Expecting 3 network interfaces')
 
 #         else:
 #             vnfMgmtIp=vnfMgmtIp.split("/")[0]
@@ -420,9 +420,9 @@ def sendVnfIp():
 #             result, err = charms.sshproxy._run(cmd)
 
 #     except:
-#         function_fail('command failed:' + err)
+#         action_fail('command failed:' + err)
 #     else:
-#         function_set({'output': result, "errors": err})
+#         action_set({'output': result, "errors": err})
 #     finally:
 #         log(result)
 
@@ -437,38 +437,44 @@ def getVnfIp():
     try:
         # use_data_interfaces = config['use_data_interfaces']
         vnfMgmtIp = config['ssh-hostname']
-        tunnelAddress = config['tunnel_address']
         tunnelId = config['tunnel_id']
         vsiId = config['vsi_id']
 
-        bandwidth = config['bandwidth']
+        # bandwidth = config['bandwidth']
 
-        log(config)
+        use_data_interfaces = config['use_data_interfaces']
+        if use_data_interfaces:
+            interface="ens4"
+        else:
+            interface="ens3"
 
+        # ifconfig | echo $(awk "/^[a-z]/ { sub(\\":\\",\\"\\"); iface = \$1; getline; sub(\\"addr:\\", \\"\\"); print \\"\\\\\\"\\"iface\\"\\\\\\":\\",\\"\\\\\\"\\"\$2\\"\\\\\\",\\" }"| grep -v 127.0.0.1) | awk "{print \\"{\\"substr(\$0, 1, length(\$0)-1)\\"}\\"}"
         try:
-            cmd = ['ifconfig | echo $(awk "/^[a-z]/ { sub(\\":\\",\\"\\"); iface = \$1; getline; sub(\\"addr:\\", \\"\\"); print \\"\\\\\\"\\"iface\\"\\\\\\":\\",\\"\\\\\\"\\"\$2\\"\\\\\\",\\" }"| grep -v 127.0.0.1) | awk "{print \\"{\\"substr(\$0, 1, length(\$0)-1)\\"}\\"}"']
+            cmd = ["sudo ip a show {} | grep inet | head -n1 | awk '{{print substr($2, 1, length($2)-3)}}'".format(interface)]
             result, err = charms.sshproxy._run(cmd)
         except:
             log('command failed:' + err)
         else:
-            set_flag('interdomainvdu.getinterfaces.failed')
+            set_flag('interdomainvdu.getvnfip.failed')
         finally:
-            log("interfaces: "+result)
-            interfacesAndIps=json.loads(result)
+            log("vnfIp: "+result)
+            vnfIp=result
 
+        # sudo ip addr 2>/dev/null | echo $(awk "/^[0-9]+: [a-z]/ { sub(\\":\\",\\"\\") ; sub(\\":\\",\\"\\") ; iface = \$2 ; getline ; print \\"\\\\\\"\\"iface\\"\\\\\\":\\",\\"\\\\\\"\\"\$2\\"\\\\\\",\\" }"| grep -v 00:00:00:00:00:00) | awk "{print \\"{\\"substr(\$0, 1, length(\$0)-1)\\"}\\"}"
         try:
-            cmd = ['sudo ip addr 2>/dev/null | echo $(awk "/^[0-9]+: [a-z]/ { sub(\\":\\",\\"\\") ; sub(\\":\\",\\"\\") ; iface = \$2 ; getline ; print \\"\\\\\\"\\"iface\\"\\\\\\":\\",\\"\\\\\\"\\"\$2\\"\\\\\\",\\" }"| grep -v 00:00:00:00:00:00) | awk "{print \\"{\\"substr(\$0, 1, length(\$0)-1)\\"}\\"}"']
+            cmd = ["sudo ip a show {} | grep link/ether | head -n1 | awk '{{print $2}}'".format(interface)]
             result, err = charms.sshproxy._run(cmd)
         except:
             log('command failed:' + err)
         else:
-            set_flag('interdomainvdu.getinterfacesmacs.failed')
+            set_flag('interdomainvdu.getvnfmac.failed')
         finally:
-            log("interfacesMACs: "+result)
-            interfacesAndMACs=json.loads(result)
+            log("vnfMac: "+result)
+            vnfMac=result
 
+        # sudo arp -n 2>/dev/null | grep "^$(sudo route -n 2>/dev/null | grep ^0.0.0.0 | awk "{print \$2}" | head -n 1) " | awk "{print \$3}"
         try:
-            cmd = ['sudo arp -n 2>/dev/null | grep "^$(sudo route -n 2>/dev/null | grep ^0.0.0.0 | awk "{print \$2}" | head -n 1) " | awk "{print \$3}"']
+            cmd = ["IP=\"$(sudo ip r | grep {} | grep via | head -n1 | awk '{{print $3}}')\";XX=$(ping -c1 $IP >> /dev/null);echo $(sudo ip n | grep $IP) | awk '{{print $5}}'".format(interface)]
             result, err = charms.sshproxy._run(cmd)
         except:
             log('command failed:' + err)
@@ -489,69 +495,26 @@ def getVnfIp():
         finally:
             publicKey=result
 
+        if not use_data_interfaces:
+            vnfIp=vnfMgmtIp
 
-
-        use_data_interfaces = config['use_data_interfaces']
-        if use_data_interfaces:
-            if len(interfacesAndIps)==3:
-                vnfMgmtIp=vnfMgmtIp.split("/")[0]
-                tunnelAddress=tunnelAddress.split("/")[0]
-                vnfIp=str(interfacesAndIps["ens4"])
-                key="ens4"
-                config["data_address"]=vnfIp
-                config["data_interface"]="ens4"
-                db.set("data_interface", "ens4")
-                db.flush()
-        #         for key, value in interfacesAndIps.items():
-        #             if str(value) != str(vnfMgmtIp) and str(value) != str(tunnelAddress):
-        #                 log("found data interface: "+key+", ip: "+value)
-        #                 vnfIp=str(value)
-        #                 config["data_address"]=vnfIp
-        #                 config["data_interface"]=str(key)
-        #                 db.set("data_interface", str(key))
-        #                 db.flush()
-        #                 break
-        #         try:
-        #             log("using interface: "+key)
-        #             cmd = ['sudo tc qdisc add dev {} root cake bandwidth {}mbit'.format(key, bandwidth)]
-        #             result, err = charms.sshproxy._run(cmd)
-        #             log("enabled tc-cake to interface")
-        #         except:
-        #             log('command failed:' + result)
-        #             log('command failed:' + err)
-        #             set_flag('interdomainvdu.tccakeaddinterface.failed')
-                result=json.dumps({"vsiId":vsiId,"publicKey": publicKey,"vnfIp":vnfIp, "tunnelId":tunnelId,"vnfMAC":interfacesAndMACs[key], "gwMAC":gwMAC})
-            else:
-                log('Expecting 3 network interfaces')
-                function_fail('Expecting 3 network interfaces')
-        else:
-            vnfMgmtIp=vnfMgmtIp.split("/")[0]
-            tunnelAddress=tunnelAddress.split("/")[0]
-            # for key, value in interfacesAndIps.items():
-            #     if str(value) == str(vnfMgmtIp):
-            #         log("found data interface: "+key+", ip: "+value)
-            #         vnfIp=str(value)
-            #         config["data_address"]=vnfIp
-            #         config["data_interface"]=str(key)
-            #         db.set("data_interface", str(key))
-            #         db.flush()
-            #         break
-            interfacesAndIps=list(interfacesAndIps.items())
-            log("using interface: "+str(interfacesAndIps[0])+" with MAC "+interfacesAndMACs[interfacesAndIps[0][0]])
-            # try:
-            #     cmd = ['sudo tc qdisc add dev {} root cake bandwidth {}mbit'.format(key, bandwidth)]
-            #     result, err = charms.sshproxy._run(cmd)
-            #     log("enabled tc-cake to interface")
-            # except:
-            #     log('command failed:' + result)
-            #     log('command failed:' + err)
-            #     set_flag('interdomainvdu.tccakeaddinterface.failed')
-            result=json.dumps({"vsiId":vsiId,"publicKey": publicKey,"vnfIp":vnfMgmtIp, "tunnelId":tunnelId, "vnfMAC":interfacesAndMACs[interfacesAndIps[0][0]], "gwMAC":gwMAC})
-            
+        config["data_address"]=vnfIp
+        config["data_interface"]=interface
+        db.set("data_interface", interface)
+        db.flush()
+        result=json.dumps({"vsiId":vsiId,"publicKey": publicKey,"publicEndpoint":vnfIp, "internalEndpoint":vnfIp, "tunnelId":tunnelId,"vnfMAC":vnfMac, "gwMAC":gwMAC})
+        # try:
+        #     cmd = ['sudo tc qdisc add dev {} root cake bandwidth {}mbit'.format(interface, bandwidth)]
+        #     result, err = charms.sshproxy._run(cmd)
+        #     log("enabled tc-cake to interface")
+        # except:
+        #     log('command failed:' + result)
+        #     log('command failed:' + err)
+        #     set_flag('interdomainvdu.tccakeaddinterface.failed')
     except:
-        function_fail('command failed:' + err)
+        action_fail('command failed:' + err)
     else:
-        function_set({'output': result, "errors": err})
+        action_set({'output': result, "errors": err})
     finally:
         log(result)
 
@@ -564,14 +527,14 @@ def modifyTunnel():
 
     # try:
     #     try:
-    #         bandwidth = function_get('bandwidth')
+    #         bandwidth = action_get('bandwidth')
     #         # data_interface = config['data_interface']
     #         data_interface=db.get("data_interface")
 
     #         log("Interface to modify: "+data_interface)
 
     #         if data_interface == "error":
-    #             function_fail('the data interface was not updated')
+    #             action_fail('the data interface was not updated')
 
     #         cmd = ['sudo tc qdisc change dev {} root cake bandwidth {}mbit'.format(data_interface, bandwidth)]
     #         result, err = charms.sshproxy._run(cmd)
@@ -582,7 +545,7 @@ def modifyTunnel():
 
 
     # except:
-    #     function_fail('command failed:' + err)
+    #     action_fail('command failed:' + err)
     # finally:
     #     log(result)
 
@@ -592,12 +555,12 @@ def ipRouteMgmt():
     result = err = ''
     try:
         try:
-            allowed_ips=function_get('allowed-ips')
-            action=function_get('action')
-            gwaddress = function_get('gw-address')
+            allowed_ips=action_get('allowed-ips')
+            action=action_get('action')
+            gwaddress = action_get('gw-address')
 
             if action not in ["add","del"]:
-                function_fail('Action not supported')
+                action_fail('Action not supported')
 
             cmd = ['sudo ip r {} {} via {}'.format(action, allowed_ips, gwaddress)]
             result, err = charms.sshproxy._run(cmd)
@@ -606,6 +569,7 @@ def ipRouteMgmt():
         else:
             set_flag('interdomainvdu.routemgmt.failed')
     except:
-        function_fail('command failed:' + err)
+        action_fail('command failed:' + err)
     finally:
         log(result)
+    clear_flag('actions.routemgmt')

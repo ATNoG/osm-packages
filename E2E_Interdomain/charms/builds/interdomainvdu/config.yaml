@@ -80,3 +80,15 @@
   #   type: boolean
   #   default: !!bool "true"
   #   description: "Specify if the charm should be configured as a server or client"
+  "allowed-ips":
+    "type": "string"
+    "default": "127.0.0.1/24"
+    "description": "Network/Mask information"
+  "gw-address":
+    "type": "string"
+    "default": "127.0.0.1"
+    "description": "Gateway address"
+  "action":
+    "type": "string"
+    "default": "add"
+    "description": "Action to execute with ip route"

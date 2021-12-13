@@ -13,8 +13,8 @@
 - "vpn"
 - "nfv"
 "series":
+- "xenial"
 - "bionic"
 - "focal"
 - "trusty"
-- "xenial"
 "subordinate": !!bool "false"

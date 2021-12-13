@@ -1,4 +1,6 @@
 #cloud-config
+manage_etc_hosts: True
+hostname: osmmtd
 password: debian
 chpasswd:
   expire: False

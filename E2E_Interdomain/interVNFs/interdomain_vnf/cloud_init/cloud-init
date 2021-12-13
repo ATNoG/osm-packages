@@ -1,4 +1,6 @@
 #cloud-config
+manage_etc_hosts: True
+hostname: osmtunnel
 password: ubuntu
 chpasswd:
   expire: False

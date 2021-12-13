@@ -108,30 +108,33 @@ vnfd:
     name: mtd
     int-cpd:
     - id: mtd-eth0-int
-      # layer-protocol:
-      # - ip-address
-      # protocol:
-      # - associated-layer-protocol: ip-address
-      #   address-data: 
-      #   - type: ip-address
-      #     l3-address-data:
-      #         ip-address-assignment: true
-      #         floating-ip-activated: true 
+      layer-protocol:
+      - ipv4
+      protocol:
+      - associated-layer-protocol: ipv4
+        address-data: 
+        - type: ip-address
+          l3-address-data:
+              floating-ip-activated: true 
       port-security-enabled: false
       port-security-disable-strategy: allow-address-pairs
       virtual-network-interface-requirement:
       - name: eth0
-        support-mandatory: true
-        virtual-interface:
-          type: PARAVIRT
+        position: 1
     - id: mtd-eth1-int
+      layer-protocol:
+      - ipv4
+      protocol:
+      - associated-layer-protocol: ipv4
+        address-data: 
+        - type: ip-address
+          l3-address-data:
+              floating-ip-activated: true 
       port-security-enabled: false
       port-security-disable-strategy: allow-address-pairs
       virtual-network-interface-requirement:
       - name: eth1
-        support-mandatory: true
-        virtual-interface:
-          type: PARAVIRT
+        position: 2
     sw-image-desc: "mtd-wg"
     virtual-compute-desc: mtd-compute
     virtual-storage-desc:

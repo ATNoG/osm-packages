@@ -26,7 +26,7 @@
     },
     {
       "branch": "refs/heads/main",
-      "rev": "26618a85b8ff023f0fea3b39beb315a5deb9f968",
+      "rev": "7e02daffc8075f0f52283c9fe2521ace9f2d7c67",
       "url": "mtdvdu"
     }
   ],
@@ -259,7 +259,7 @@
     "metadata.yaml": [
       "mtdvdu",
       "dynamic",
-      "900305bba1f89c024d41fdd568a5206b590a960173b1b848493f346400a0fb37"
+      "1981bc89242325178aa3479266f12f3e84801dc561222a870ce2e425b5e0a81e"
     ],
     "reactive/__init__.py": [
       "layer:basic",
@@ -269,7 +269,7 @@
     "reactive/mtdvdu.py": [
       "mtdvdu",
       "static",
-      "04784de013698aad34639f0f229a0000871ae3f7f2b636c8215acf5d85d0bc49"
+      "c880c8ca74493e0896c29a9dafc18e1f3e40b52fa47fe8f61184d29507284bf7"
     ],
     "reactive/sshproxy.py": [
       "mtdvdu",
@@ -299,7 +299,7 @@
     "version": [
       "mtdvdu",
       "dynamic",
-      "ad813f72cca057bbc8081706db75b1202d936d5c2bd99023e62e6fdf2f806528"
+      "3b27c7f91af8df2b39d211062eba185004185173896bbbb3bce948ff0dc3ddeb"
     ],
     "wheelhouse.txt": [
       "mtdvdu",
@@ -326,15 +326,15 @@
       "dynamic",
       "abf66d20932f1875a9c290345f19f35dad9031d4a9397de242a2b34e87ccddb5"
     ],
-    "wheelhouse/charmhelpers-0.20.23.tar.gz": [
+    "wheelhouse/charmhelpers-0.20.24.tar.gz": [
       "mtdvdu",
       "dynamic",
-      "59a9776594e91cd3e3e000043f8668b4d7b279422dbb17e320f01dc16385b80e"
+      "86295d6a853b6e16e3ed49e900fc47fc38192a5aa95f31b07f0db54ed8ec8e4b"
     ],
-    "wheelhouse/charms.reactive-1.4.1.tar.gz": [
+    "wheelhouse/charms.reactive-1.5.0.tar.gz": [
       "mtdvdu",
       "dynamic",
-      "bba21b4fd40b26c240c9ef2aa10c6fdf73592031c68591da4e7ccc46ca9cb616"
+      "b56484ed17f412c7738ff21e4ddc0e7c758af2288eac9fe521a86c8c31c1b150"
     ],
     "wheelhouse/ecdsa-0.17.0.tar.gz": [
       "__pip__",
