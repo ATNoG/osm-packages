@@ -1,6 +1,6 @@
-name: samplecharm
+name: prometheus-node-exporter
 summary: this is an example
-maintainer: David Garcia <david.garcia@canonical.com>
+maintainer: Rafael Direito <rdireito@av.it.pt>
 description: |
   This is an example of a proxy charm deployed by Open Source Mano.
 tags:
@@ -9,6 +9,7 @@ subordinate: false
 series:
   - bionic
   - xenial
+  - focal
 peers: # This will give HA capabilities to your Proxy Charm
   proxypeer:
     interface: proxypeer

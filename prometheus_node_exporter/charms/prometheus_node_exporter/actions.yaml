@@ -27,3 +27,7 @@ verify-ssh-credentials:
   description: "Verify that this unit can authenticate with server specified by ssh-hostname and ssh-username."
 get-ssh-public-key:
   description: "Get the public SSH key for this unit."
+
+# Custom actions
+start-prometheus-exporter:
+  description: "blah blah blah."
