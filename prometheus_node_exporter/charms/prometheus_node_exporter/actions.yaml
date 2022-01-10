@@ -1,0 +1,29 @@
+# Actions to be implemented in src/charm.py
+configure-remote:
+  description: "Configures the remote server"
+  params:
+    destination_ip:
+      description: "IP of the remote server"
+      type: string
+      default: ""
+  required:
+    - destination_ip
+start-service:
+  description: "Starts the service of the VNF"
+
+# Required by charms.osm.sshproxy
+run:
+  description: "Run an arbitrary command"
+  params:
+    command:
+      description: "The command to execute."
+      type: string
+      default: ""
+  required:
+    - command
+generate-ssh-key:
+  description: "Generate a new SSH keypair for this unit. This will replace any existing previously generated keypair."
+verify-ssh-credentials:
+  description: "Verify that this unit can authenticate with server specified by ssh-hostname and ssh-username."
+get-ssh-public-key:
+  description: "Get the public SSH key for this unit."
