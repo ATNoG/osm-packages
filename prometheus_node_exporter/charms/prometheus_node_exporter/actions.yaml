@@ -11,6 +11,20 @@ configure-remote:
 start-service:
   description: "Starts the service of the VNF"
 
+
+# Standard OSM functions
+start:
+  description: "Start the service on the VNF."
+stop:
+  description: "Stop the service on the VNF."
+restart:
+  description: "Restart the service on the VNF."
+reboot:
+  description: "Reboot the VNF virtual machine."
+upgrade:
+  description: "Upgrade the software on the VNF."
+
+
 # Required by charms.osm.sshproxy
 run:
   description: "Run an arbitrary command"
@@ -28,6 +42,9 @@ verify-ssh-credentials:
 get-ssh-public-key:
   description: "Get the public SSH key for this unit."
 
+
 # Custom actions
 start-prometheus-exporter:
-  description: "blah blah blah."
+  description: "Start the Prometheus Node Exporter"
+stop-prometheus-exporter:
+  description: "Stop the Prometheus Node Exporter"
