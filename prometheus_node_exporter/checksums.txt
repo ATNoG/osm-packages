@@ -1,0 +1,3 @@
+5cae7b460cadd9994463a82061d723cd	tutorial_vnf/README.md
+557a48eb59b9d650c4e36550f13c3f12	tutorial_vnf/tutorial_vnfd.yaml
+47be3376ee63efdcb378a28cfa14e743	tutorial_vnf/cloud_init/cloud-init.cfg

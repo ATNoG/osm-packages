@@ -1,0 +1,48 @@
+vnfd:
+  description: A basic VNF descriptor with one VDU
+  df:
+  - id: default-df
+    instantiation-level:
+    - id: default-instantiation-level
+      vdu-level:
+      - number-of-instances: "1"
+        vdu-id: tutorial
+    vdu-profile:
+    - id: tutorial
+      min-number-of-instances: "1"
+  ext-cpd:
+  - id: vnf-cp0-ext
+    int-cpd:
+      cpd: vdu-eth0-int
+      vdu-id: tutorial
+  id: tutorial_vnf
+  mgmt-cp: vnf-cp0-ext
+  product-name: tutorial_vnf
+  sw-image-desc:
+  - id: "Ubuntu Server 20.04"
+    image: "Ubuntu Server 20.04"
+    name: "Ubuntu Server 20.04"
+  vdu:
+  - cloud-init-file: cloud-init.cfg
+    id: tutorial
+    int-cpd:
+    - id: vdu-eth0-int
+      virtual-network-interface-requirement:
+      - name: vdu-eth0
+        virtual-interface:
+          type: PARAVIRT
+    name: tutorial
+    sw-image-desc: "Ubuntu Server 20.04"
+    virtual-compute-desc: tutorial-compute
+    virtual-storage-desc:
+    - tutorial-storage
+  version: "1.0"
+  virtual-compute-desc:
+  - id: tutorial-compute
+    virtual-cpu:
+      num-virtual-cpu: "1"
+    virtual-memory:
+      size: "1.0"
+  virtual-storage-desc:
+  - id: tutorial-storage
+    size-of-storage: "10"
