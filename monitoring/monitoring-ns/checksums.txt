@@ -1,0 +1,3 @@
+aedffed2791a03b115aa8df9393fe257	monitoring-ns/monitoring-nsd.yaml
+f2abe349b9d90566431fced6e21b20af	monitoring-ns/monitoring-ns.tar.gz
+7bfea97af787ba9e5a0107e78e26e753	monitoring-ns/README.md

@@ -1,0 +1,79 @@
+vnfd:
+  description: A VNF with Monitoring
+  df:
+  - id: default-df
+    instantiation-level:
+    - id: default-instantiation-level
+      vdu-level:
+      - number-of-instances: "1"
+        vdu-id: monitoring-vdu
+    vdu-profile:
+    - id: monitoring-vdu
+      min-number-of-instances: "1"
+    # Juju/LCM Actionns
+    lcm-operations-configuration:
+      operate-vnf-op-config:
+        day1-2:
+        - config-primitive:
+          - name: start-prometheus-exporter
+            execution-environment-ref: configure-vnf
+          - name: stop-prometheus-exporter
+            execution-environment-ref: configure-vnf
+          id: monitoring-vnf
+          execution-environment-list:
+          - id: configure-vnf
+            external-connection-point-ref: vnf-cp0-ext
+            juju:
+              charm: prometheus-node-exporter
+              proxy: true
+          config-access:
+            ssh-access:
+              default-user: ubuntu
+              required: true
+          initial-config-primitive:
+          - execution-environment-ref: configure-vnf
+            name: config
+            parameter:
+            - name: ssh-hostname
+              value: <rw_mgmt_ip>
+            - name: ssh-username
+              value: ubuntu
+            - name: ssh-password
+              value: ubuntu
+            seq: 1
+  ext-cpd:
+  - id: vnf-cp0-ext
+    int-cpd:
+      cpd: vdu-eth0-int
+      vdu-id:  monitoring-vdu
+  id: monitoring-vnf
+  mgmt-cp: vnf-cp0-ext
+  product-name: monitoring-vnf
+  sw-image-desc:
+  - id: "Ubuntu Server 20.04"
+    image: "Ubuntu Server 20.04"
+    name: "Ubuntu Server 20.04"
+  vdu:
+  - cloud-init-file: cloud-init.cfg
+    id: monitoring-vdu
+    int-cpd:
+    - id: vdu-eth0-int
+      virtual-network-interface-requirement:
+      - name: vdu-eth0
+        virtual-interface:
+          type: PARAVIRT
+    name: monitoring-vdu
+    sw-image-desc: "Ubuntu Server 20.04"
+    virtual-compute-desc: monitoring-vnf-compute
+    virtual-storage-desc:
+    - monitoring-vnf-storage
+  version: "1.0"
+  virtual-compute-desc:
+  - id: monitoring-vnf-compute
+    virtual-cpu:
+      num-virtual-cpu: "2"
+    virtual-memory:
+      size: "2.0"
+  virtual-storage-desc:
+  - id: monitoring-vnf-storage
+    size-of-storage: "20"
