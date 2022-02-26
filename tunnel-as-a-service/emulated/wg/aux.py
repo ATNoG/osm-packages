@@ -116,3 +116,33 @@ class WGAux:
             logging.error("Unable to update wireguard config on vnf")
             #self.unit.status = BlockedStatus(error_status)
             raise Exception(("Unable to update wireguard config on vnf"))
+
+    def get_peer_given_public_key(self, event, public_key, endpoint_ip):
+        if public_key is None and endpoint_ip is None:
+            logging.error("Missing peer public key or endpoint IP")
+            event.set_results({'output': "", "errors": "Missing peer public key or endpoint IP"})
+            raise Exception("Missing peer public key or endpoint IP")
+
+        self.get_wg_config_to_local()
+        logging.info("Updating local wireguard configuration file")
+        m_wgconfig = wgconfig.WGConfig("/tmp/wireguard/wg.conf")
+        m_wgconfig.read_file()
+        wg_existing_peers = m_wgconfig.peers
+
+        m_peer_public_key = None
+        if "peer_endpoint_ip" in event.params:
+            peer_endpoint_ip = event.params["peer_endpoint_ip"]
+            for peer_data in wg_existing_peers.values():
+                if peer_endpoint_ip in peer_data["Endpoint"]:
+                    m_peer_public_key = peer_data["PublicKey"]
+                    break
+
+        if m_peer_public_key is None:
+            m_peer_public_key = public_key
+
+        if m_peer_public_key not in wg_existing_peers.keys():
+            logging.error("Could not select the desired peer")
+            event.set_results({'output': "", "errors": "Could not select the desired peer"})
+            raise Exception("Could not select the desired peer")
+
+        return wg_existing_peers[m_peer_public_key]
