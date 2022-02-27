@@ -27,7 +27,7 @@ class WGAux:
             #self.unit.status = MaintenanceStatus(command.ok_status)
             return ret
         except Exception as e:
-            logging.error(command.error_status)
+            command.event.set_results({'output': "", "errors": "[{}] Action failed {}. Stderr: {}".format(command.command, e, error)})
             logging.error("[{}] Action failed {}. Stderr: {}".format(command.command, e, error))
             #self.unit.status = BlockedStatus(command.error_status)
             raise Exception("[{}] Action failed {}. Stderr: {}".format(command.command, e, error))

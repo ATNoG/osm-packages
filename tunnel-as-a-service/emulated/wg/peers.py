@@ -27,6 +27,7 @@ class WGPeers:
 
             # 1. Stop Wireguard
             command = Command(
+                event,
                 "sudo wg-quick down {} || true ".format(forward_interface),
                 "Stopping wireguard...",
                 "Wireguard stopped",
@@ -65,12 +66,15 @@ class WGPeers:
             self.wg_aux.update_wg_config_on_vnf()
 
             command = Command(
+                event,
                 "sudo wg-quick up {}".format(forward_interface),
                 "Starting wireguard...",
                 "Wireguard started",
                 "Unable to start wireguard!",
             )
             self.wg_aux.execute_command(command)
+            
+            event.set_results({'output': "Peer added with success", "errors": ""})
             ##self.unit.status = ActiveStatus("<-replace->")
             return True
         else:
@@ -103,7 +107,7 @@ class WGPeers:
 
             logging.info("Existing/Filtered peers: {}".format(result_peers))
 
-            event.set_results({'output': result_peers, "errors": "-"})
+            event.set_results({'output': result_peers, "errors": ""})
             return True
         else:
             event.fail("Unit is not leader")
@@ -120,6 +124,7 @@ class WGPeers:
 
             # 2. Stop Wireguard
             command = Command(
+                event,
                 "sudo wg-quick down {} || true ".format(forward_interface),
                 "Stopping wireguard...",
                 "Wireguard stopped",
@@ -137,6 +142,7 @@ class WGPeers:
             self.wg_aux.update_wg_config_on_vnf()
 
             command = Command(
+                event,
                 "sudo wg-quick up {}".format(forward_interface),
                 "Starting wireguard...",
                 "Wireguard started",
@@ -144,7 +150,7 @@ class WGPeers:
             )
             self.wg_aux.execute_command(command)
 
-            event.set_results({'output': m_wgconfig.peers[peer_info["PublicKey"]], "errors": ""})
+            event.set_results({'output': "Peer updated with success: " + str(m_wgconfig.peers[peer_info["PublicKey"]]), "errors": ""})
             logging.info("Updated peer:" +str(m_wgconfig.peers[peer_info["PublicKey"]]))
             return True
         else:
@@ -166,6 +172,7 @@ class WGPeers:
 
             # 2. Stop Wireguard
             command = Command(
+                event,
                 "sudo wg-quick down {} || true ".format(forward_interface),
                 "Stopping wireguard...",
                 "Wireguard stopped",
@@ -187,6 +194,7 @@ class WGPeers:
             self.wg_aux.update_wg_config_on_vnf()
 
             command = Command(
+                event,
                 "sudo wg-quick up {}".format(forward_interface),
                 "Starting wireguard...",
                 "Wireguard started",
@@ -194,7 +202,7 @@ class WGPeers:
             )
             self.wg_aux.execute_command(command)
 
-            event.set_results({'output': m_wgconfig.peers[peer_info["PublicKey"]], "errors": ""})
+            event.set_results({'output': "Peer updated with success:" + str(m_wgconfig.peers[peer_info["PublicKey"]]), "errors": ""})
             logging.info("Updated peer:" + str(m_wgconfig.peers[peer_info["PublicKey"]]))
             return True
         else:
@@ -210,6 +218,7 @@ class WGPeers:
 
             # 2. Stop Wireguard
             command = Command(
+                event,
                 "sudo wg-quick down {} || true ".format(forward_interface),
                 "Stopping wireguard...",
                 "Wireguard stopped",
@@ -226,6 +235,7 @@ class WGPeers:
             self.wg_aux.update_wg_config_on_vnf()
 
             command = Command(
+                event,
                 "sudo wg-quick up {}".format(forward_interface),
                 "Starting wireguard...",
                 "Wireguard started",
@@ -233,7 +243,7 @@ class WGPeers:
             )
             self.wg_aux.execute_command(command)
 
-            event.set_results( {'output': m_wgconfig.peers, "errors": ""})
+            event.set_results( {'output': "Peer deleted with success! Current peers:" + str(m_wgconfig.peers), "errors": ""})
             logging.info("Current peers:" + str(m_wgconfig.peers))
             return True
         else:

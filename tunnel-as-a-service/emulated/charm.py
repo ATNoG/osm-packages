@@ -43,7 +43,9 @@ class Event():
     def del_param(self, key):
         del self.params[key]
 
-    def set_results(self, x):
+    def set_results(self, results):
+        print("Event results -> " + str(results))
+
         pass
 ##### END OF MOCKS #####
 
@@ -122,10 +124,10 @@ class TunnelCharm:
 if __name__ == "__main__":
     tunnel_charm = TunnelCharm("ubuntu", "ubuntu", "10.0.12.107")
     # Install wireguard and start thee tunnel
-    tunnel_charm.install_wg_packages(None)
-    tunnel_charm.wireguard_version_check(None)
-    tunnel_charm.configuration_keygen(None)
-    tunnel_charm.wireguard_server_configuration(None)
+    #tunnel_charm.install_wg_packages(None)
+    #tunnel_charm.wireguard_version_check(None)
+    #tunnel_charm.configuration_keygen(None)
+    #tunnel_charm.wireguard_server_configuration(None)
     # Add Peer
     #event = Event()
     #event.add_param("peer_key", "U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
@@ -133,14 +135,20 @@ if __name__ == "__main__":
     #event.add_param("allowed_networks", ["10.10.10.0/24", "10.10.11.0/24"])
     #tunnel_charm.add_peer(event)
     # Get VNF IPs
+    #event = Event()
     #tunnel_charm.get_vnf_ip(event)
     # Add route
     #event = Event()
-    #event.add_param("action", "delete")
+    #event.add_param("action", "add")
     #event.add_param("network", "10.0.16.0/23")
     #event.add_param("gw_address", "10.0.12.1")
     #tunnel_charm.ip_route_management(event)
+    #tunnel_charm.ip_route_management(event)
+    #event.add_param("action", "delete")
+    #tunnel_charm.ip_route_management(event)
+    #tunnel_charm.ip_route_management(event)
     # Get Peers
+    #event = Event()
     #tunnel_charm.get_peers(event)
     # Get specific peer - public key
     #event = Event()
@@ -150,8 +158,16 @@ if __name__ == "__main__":
     #event = Event()
     #event.add_param("peer_endpoint_ip", "155.44.99.111")
     #tunnel_charm.get_peers(event)
+    # Update peers endpoint
+    #event = Event()
+    #event.add_param("peer_public_key","U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
     #event.add_param("new_endpoint", "155.44.99.111:51823")
     #tunnel_charm.update_peer_endpoint(event)
+    #event = Event()
+    #event.add_param("peer_endpoint_ip", "155.44.99.111")
+    #event.add_param("new_endpoint", "155.44.99.111:51824")
+    #tunnel_charm.update_peer_endpoint(event)
+    # Update peers allowed ips
     #event = Event()
     #event.add_param("peer_public_key","U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
     #event.add_param("action", "add")
@@ -160,18 +176,23 @@ if __name__ == "__main__":
     #event.add_param("action", "delete")
     #event.add_param("network", "10.10.17.0/24")
     #tunnel_charm.update_peer_allowed_ips(event)
+    # Add another peer
     #event = Event()
-    #event.add_param("peer_key", "U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
+    #event.add_param("peer_key", "X5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
     #event.add_param("peer_endpoint", "155.44.99.111:51820")
     #event.add_param("allowed_networks", ["10.10.10.0/24"])
     #tunnel_charm.add_peer(event)
-    #event.add_param("peer_key", "U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
+    # Delete peer
+    #event = Event()
+    #event.add_param("peer_key", "X5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
     #tunnel_charm.delete_peer(event)
+    # Change ip routes
     #event = Event()
     #tunnel_charm.get_ip_routes(event)
     #event.add_param("action", "add")
     #event.add_param("network", "10.0.16.0/23")
     #event.add_param("gw_address", "10.0.12.1")
+    #event.add_param("action", "add")
     #tunnel_charm.ip_route_management(event)
     #event.add_param("action", "delete")
     #tunnel_charm.ip_route_management(event)

@@ -22,6 +22,7 @@ class NetworkMgmt:
             vsi_id = self.tunnel_charm.model.config['vsi_id']
 
             command = Command(
+                event,
                 "ls /sys/class/net/",
                 "Getting VNF network interfaces...",
                 "Got VNF network interfaces",
@@ -37,6 +38,7 @@ class NetworkMgmt:
                 net_int_ip = None
                 net_int_mac = None
                 command = Command(
+                    event,
                     "ip addr show {} | grep inet | head -n1 | xargs ".format(
                         net_int),
                     "Getting {} Network interface Information (IP)".format(
@@ -52,6 +54,7 @@ class NetworkMgmt:
                     #logging.info("VNF IP: {}".format(vnfIp))
 
                 command = Command(
+                    event,
                     "ip addr show {} | grep ether | xargs".format(net_int),
                     "Getting {} Network interface Information (MAC)".format(
                         net_int),
@@ -65,6 +68,7 @@ class NetworkMgmt:
                     net_int_mac = ret["output"].split(" ")[1]
 
                 command = Command(
+                    event,
                     "ip addr show {} | grep ether | xargs".format(net_int),
                     "Getting {} Network interface Information (Gateway)".format(
                         net_int),
@@ -85,6 +89,7 @@ class NetworkMgmt:
             print(network_interfaces_info)
 
             command = Command(
+                event,
                 "sudo cat {}".format(Constants.PUBLIC_KEY_FILEPATH),
                 "Checking wireguard public key...",
                 "Checked wireguard public key",
@@ -121,6 +126,7 @@ class NetworkMgmt:
 
             if action == 'add':
                 command = Command(
+                    event,
                     "sudo ip r add {} via {} >> /dev/null 2>&1 || sudo ip r chg {} via {}".format( network, gw_address, network, gw_address),
                     "Adding route ({} via {})...".format(action, network, gw_address),
                     "Added route ({} via {})".format(action, network, gw_address),
@@ -130,18 +136,20 @@ class NetworkMgmt:
 
             elif action == 'delete':
                 command = Command(
+                    event,
                     "sudo ip r delete {} via {} >> /dev/null 2>&1 || true".format( network, gw_address),
                     "Deleting route ({} via {})...".format(action, network, gw_address),
                     "Deleted route ({} via {})".format( action, network, gw_address),
                     "Could not delete route ({} via {})".format(network, gw_address),
                 )
                 self.wg_aux.execute_command(command)
-
             else:
+                event.set_results({'output': "", "errors": "Action not supported! Allowed actions = [add, delete]"})
                 logging.error("Action not supported! Allowed actions = [add, delete]")
                 #self.unit.status = BlockedStatus(command.error_status)
                 raise Exception( "Action not supported! Allowed actions = [add, delete]")
-
+                
+            event.set_results({'output': "Routes update with success", "errors": ""})  
             return True
         else:
             event.fail("Unit is not leader")
@@ -158,13 +166,14 @@ class NetworkMgmt:
         if self.tunnel_charm.model.unit.is_leader():
 
             command = Command(
+                event,
                 "ip r",
                 "Getting IP routes...",
                 "Got Ip routes",
                 "Couldn't get IP routes"
             )
             ret = self.wg_aux.execute_command(command)
-            print(ret["output"])
+            event.set_results({'output': ret["output"], "errors": ""})
             return True
         else:
             event.fail("Unit is not leader")
