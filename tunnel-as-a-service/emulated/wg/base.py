@@ -3,6 +3,7 @@ import logging
 import os
 import wgconfig
 from command import Command
+import wg.constants as Constants 
 
 # Logger
 logging.basicConfig(
@@ -62,25 +63,24 @@ class WGBase:
 
     def configuration_keygen(self, event):
         if self.tunnel_charm.model.unit.is_leader():
-            private_key_path = "/etc/wireguard/privatekey"
-            public_key_path = "/etc/wireguard/publickey"
-
             commands = [
                 Command(
                     "wg genkey | sudo tee {} | wg pubkey | sudo tee {}".format(
-                        private_key_path, public_key_path),
+                        Constants.PRIVATE_KEY_FILEPATH,
+                        Constants.PUBLIC_KEY_FILEPATH
+                        ),
                     "Creating wireguard keys...",
                     "Created wireguard keys",
                     "Could not create wireguard keys!",
                 ),
                 Command(
-                    "sudo cat {}".format(private_key_path),
+                    "sudo cat {}".format(Constants.PRIVATE_KEY_FILEPATH),
                     "Checking wireguard private key...",
                     "Checked wireguard private key",
                     "Could not validate wireguard private key!",
                 ),
                 Command(
-                    "sudo cat {}".format(public_key_path),
+                    "sudo cat {}".format(Constants.PUBLIC_KEY_FILEPATH),
                     "Checking wireguard public key...",
                     "Checked wireguard public key",
                     "Could not validate wireguard public key!",
@@ -104,17 +104,17 @@ class WGBase:
 
             # create base configuration file
             logging.info("Creating local wireguard configuration file")
-            if not os.path.exists("/tmp/wireguard/wg.conf"):
-                if not os.path.exists("/tmp/wireguard/"):
-                    os.mkdir("/tmp/wireguard")
-                open("/tmp/wireguard/wg.conf", 'a').close()
+            if not os.path.exists(Constants.WG_CONFIG_LOCAL_FILEPATH):
+                if not os.path.exists(Constants.WG_CONFIG_LOCAL_DIR):
+                    os.mkdir(Constants.WG_CONFIG_LOCAL_DIR)
+                open(Constants.WG_CONFIG_LOCAL_FILEPATH, 'a').close()
             logging.info("Local wireguard configuration file created")
 
             # define the interface of the wireguard conf file
-            m_wgconfig = wgconfig.WGConfig("/tmp/wireguard/wg.conf")
+            m_wgconfig = wgconfig.WGConfig(Constants.WG_CONFIG_LOCAL_FILEPATH)
 
             command = Command(
-                "sudo cat /etc/wireguard/privatekey",
+                "sudo cat {}".format(Constants.PRIVATE_KEY_FILEPATH),
                 "Obtaining wireguard private key...",
                 "Obtained wireguard private key",
                 "Could not obtain wireguard private key!"
@@ -147,7 +147,7 @@ class WGBase:
             self.wg_aux.execute_command(command)
 
             # Print WG Configuration
-            with open("/tmp/wireguard/wg.conf", "r") as f:
+            with open(Constants.WG_CONFIG_LOCAL_FILEPATH, "r") as f:
                 logging.info(
                     "\n<===== Wireguard Configuration File =====>\n" + f.read())
 

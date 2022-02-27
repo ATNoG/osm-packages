@@ -121,9 +121,9 @@ class TunnelCharm:
 if __name__ == "__main__":
     tunnel_charm = TunnelCharm("ubuntu", "ubuntu", "10.0.12.107")
     # Install wireguard and start thee tunnel
-    tunnel_charm.install_wg_packages(None)
-    tunnel_charm.wireguard_version_check(None)
-    tunnel_charm.configuration_keygen(None)
+    #tunnel_charm.install_wg_packages(None)
+    #tunnel_charm.wireguard_version_check(None)
+    #tunnel_charm.configuration_keygen(None)
     tunnel_charm.wireguard_server_configuration(None)
     # Add Peer
     event = Event()
@@ -133,7 +133,7 @@ if __name__ == "__main__":
     tunnel_charm.add_peer(event)
     # Get VNF IPs
     tunnel_charm.get_vnf_ip(event)
-    # Add route
+    # Add route ---> HERE!
     event = Event()
     event.add_param("action", "add")
     event.add_param("network", "10.0.16.0/23")

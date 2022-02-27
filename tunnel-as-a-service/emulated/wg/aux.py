@@ -2,7 +2,7 @@ import wgconfig
 import os
 from command import Command
 import json
-
+import wg.constants as Constants
 import logging
 # Logger
 logging.basicConfig(
@@ -59,14 +59,15 @@ class WGAux:
     
     def get_wg_config_to_local(self):
         forward_interface = self.tunnel_charm.model.config["forward_interface"]
-        destination_file_local = "/tmp/wireguard/wg.conf"
-        source_file_vnf = "/etc/wireguard/{}.conf".format(forward_interface)
+        source_file_vnf = "{}/{}.conf".format(Constants.VNF_WG_CONFIG_DESTINATION_DIR,forward_interface)
 
-        if not os.path.exists("/tmp/wireguard/wg.conf"):
-            if not os.path.exists("/tmp/wireguard/"):
-                os.mkdir("/tmp/wireguard")
-            open("/tmp/wireguard/wg.conf", 'a').close()
-            logging.info("Local wireguard configuration file created")
+        # create base configuration file
+        logging.info("Creating local wireguard configuration file")
+        if not os.path.exists(Constants.WG_CONFIG_LOCAL_FILEPATH):
+            if not os.path.exists(Constants.WG_CONFIG_LOCAL_DIR):
+                os.mkdir(Constants.WG_CONFIG_LOCAL_DIR)
+            open(Constants.WG_CONFIG_LOCAL_FILEPATH, 'a').close()
+        logging.info("Local wireguard configuration file created")
 
         # 1. Obtain the wg config file from the VNF
         command = Command(
@@ -78,14 +79,14 @@ class WGAux:
         ret = self.execute_command(command)
 
         #2. Write the wg config file to local
-        with open(destination_file_local, "w") as f:
+        with open(Constants.WG_CONFIG_LOCAL_FILEPATH, "w") as f:
                 f.write(ret["output"]+"\n")
 
 
     def update_wg_config_on_vnf(self):
         forward_interface = self.tunnel_charm.model.config["forward_interface"]
-        source_file = "/tmp/wireguard/wg.conf"
-        destination_file = "~/{}.conf".format(forward_interface)
+        source_file = Constants.WG_CONFIG_LOCAL_FILEPATH
+        destination_file = "{}/{}.conf".format(Constants.VNF_WG_CONFIG_HOME_DIR, forward_interface)
 
         # 1 - move config file to vnf's home directory
         try:
@@ -103,10 +104,10 @@ class WGAux:
 
             # 2 - update config file
             command = Command(
-                "sudo mv {} /etc/wireguard/".format(destination_file),
-                "Moving wireguard configuration file to /etc/wireguard/...",
-                "Moved wireguard configuration file to /etc/wireguard/",
-                "Could not move wireguard configuration file to /etc/wireguard/"
+                "sudo mv {} {}".format(destination_file, Constants.VNF_WG_CONFIG_DESTINATION_DIR),
+                "Moving wireguard configuration file to {}/...".format(Constants.VNF_WG_CONFIG_DESTINATION_DIR),
+                "Moved wireguard configuration file to {}/".format(Constants.VNF_WG_CONFIG_DESTINATION_DIR),
+                "Could not move wireguard configuration file to {}/".format(Constants.VNF_WG_CONFIG_DESTINATION_DIR)
             )
             self.execute_command(command)
             logging.info("Updated wireguard configuration file on VNF")
@@ -125,7 +126,7 @@ class WGAux:
 
         self.get_wg_config_to_local()
         logging.info("Updating local wireguard configuration file")
-        m_wgconfig = wgconfig.WGConfig("/tmp/wireguard/wg.conf")
+        m_wgconfig = wgconfig.WGConfig(Constants.WG_CONFIG_LOCAL_FILEPATH)
         m_wgconfig.read_file()
         wg_existing_peers = m_wgconfig.peers
 
