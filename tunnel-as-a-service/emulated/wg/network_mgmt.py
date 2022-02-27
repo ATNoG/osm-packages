@@ -1,8 +1,8 @@
 import wgconfig
 import os
-from command import Command
+from wg.command import Command
 import json
-
+import wg.constants as Constants
 import logging
 # Logger
 logging.basicConfig(
@@ -20,7 +20,6 @@ class NetworkMgmt:
             vnf_mgmt_ip = self.tunnel_charm.model.config['ssh-hostname']
             tunnel_peer_address = self.tunnel_charm.model.config['tunnel_peer_address']
             vsi_id = self.tunnel_charm.model.config['vsi_id']
-            public_key_path = "/etc/wireguard/publickey"
 
             command = Command(
                 "ls /sys/class/net/",
@@ -86,7 +85,7 @@ class NetworkMgmt:
             print(network_interfaces_info)
 
             command = Command(
-                "sudo cat {}".format(public_key_path),
+                "sudo cat {}".format(Constants.PUBLIC_KEY_FILEPATH),
                 "Checking wireguard public key...",
                 "Checked wireguard public key",
                 "Could not validate wireguard public key!",
@@ -120,22 +119,52 @@ class NetworkMgmt:
 
         if self.tunnel_charm.model.unit.is_leader():
 
-            if action not in ["add", "delete"]:
-                logging.error(
-                    "Action not supported! Allowed actions = [add, delete]")
+            if action == 'add':
+                command = Command(
+                    "sudo ip r add {} via {} >> /dev/null 2>&1 || sudo ip r chg {} via {}".format( network, gw_address, network, gw_address),
+                    "Adding route ({} via {})...".format(action, network, gw_address),
+                    "Added route ({} via {})".format(action, network, gw_address),
+                    "could not add route ({} via {})".format(network, gw_address),
+                )
+                self.wg_aux.execute_command(command)
+
+            elif action == 'delete':
+                command = Command(
+                    "sudo ip r delete {} via {} >> /dev/null 2>&1 || true".format( network, gw_address),
+                    "Deleting route ({} via {})...".format(action, network, gw_address),
+                    "Deleted route ({} via {})".format( action, network, gw_address),
+                    "Could not delete route ({} via {})".format(network, gw_address),
+                )
+                self.wg_aux.execute_command(command)
+
+            else:
+                logging.error("Action not supported! Allowed actions = [add, delete]")
                 #self.unit.status = BlockedStatus(command.error_status)
-                raise Exception(
-                    "Action not supported! Allowed actions = [add, delete]")
+                raise Exception( "Action not supported! Allowed actions = [add, delete]")
+
+            return True
+        else:
+            event.fail("Unit is not leader")
+
+    def modify_tunnel(self, event):
+        if self.tunnel_charm.model.unit.is_leader():
+            pass
+            #self.unit.status = ActiveStatus("<-replace->")
+            return True
+        else:
+            event.fail("Unit is not leader")
+
+    def get_ip_routes(self, event):
+        if self.tunnel_charm.model.unit.is_leader():
 
             command = Command(
-                "sudo ip r {} {} via {}".format(action, network, gw_address),
-                "{}ing route ({} via {})...".format(
-                    action, network, gw_address),
-                "{}ed route ({} via {})".format(action, network, gw_address),
-                "could not {} route ({} via {})".format(
-                    action, network, gw_address),
+                "ip r",
+                "Getting IP routes...",
+                "Got Ip routes",
+                "Couldn't get IP routes"
             )
-            self.wg_aux.execute_command(command)
+            ret = self.wg_aux.execute_command(command)
+            print(ret["output"])
             return True
         else:
             event.fail("Unit is not leader")

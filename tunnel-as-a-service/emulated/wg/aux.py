@@ -1,6 +1,6 @@
 import wgconfig
 import os
-from command import Command
+from wg.command import Command
 import json
 import wg.constants as Constants
 import logging
@@ -71,6 +71,7 @@ class WGAux:
 
         # 1. Obtain the wg config file from the VNF
         command = Command(
+            None,
             "sudo cat {} ".format(source_file_vnf),
             "Performing a cat on the wireguard configuration file on the VNF...",
             "Performed a cat on the wireguard configuration file on the VNF",
@@ -104,6 +105,7 @@ class WGAux:
 
             # 2 - update config file
             command = Command(
+                None,
                 "sudo mv {} {}".format(destination_file, Constants.VNF_WG_CONFIG_DESTINATION_DIR),
                 "Moving wireguard configuration file to {}/...".format(Constants.VNF_WG_CONFIG_DESTINATION_DIR),
                 "Moved wireguard configuration file to {}/".format(Constants.VNF_WG_CONFIG_DESTINATION_DIR),

@@ -1,7 +1,8 @@
 import wgconfig
 import os
-from command import Command
+from wg.command import Command
 import json
+import wg.constants as Constants 
 
 import logging
 # Logger
@@ -39,7 +40,7 @@ class WGPeers:
 
             # 2.2. Add peer to wg local config
             logging.info("Updating local wireguard configuration file")
-            m_wgconfig = wgconfig.WGConfig("/tmp/wireguard/wg.conf")
+            m_wgconfig = wgconfig.WGConfig(Constants.WG_CONFIG_LOCAL_FILEPATH)
             m_wgconfig.read_file()
 
             # if peer already exists, remove it
@@ -82,7 +83,7 @@ class WGPeers:
 
             # 2. Add peer to wg local config
             logging.info("Updating local wireguard configuration file")
-            m_wgconfig = wgconfig.WGConfig("/tmp/wireguard/wg.conf")
+            m_wgconfig = wgconfig.WGConfig(Constants.WG_CONFIG_LOCAL_FILEPATH)
             m_wgconfig.read_file()
 
             # 3. Get peers from wg config
@@ -126,7 +127,7 @@ class WGPeers:
             )
             self.wg_aux.execute_command(command)
 
-            m_wgconfig = wgconfig.WGConfig("/tmp/wireguard/wg.conf")
+            m_wgconfig = wgconfig.WGConfig(Constants.WG_CONFIG_LOCAL_FILEPATH)
             m_wgconfig.read_file()
             m_wgconfig.del_attr(peer_info["PublicKey"], "Endpoint")
             m_wgconfig.add_attr(
@@ -160,7 +161,7 @@ class WGPeers:
                 logging.error( "Action not supported! Allowed actions = [add, delete]")
                 raise Exception( "Action not supported! Allowed actions = [add, delete]")
 
-            public_key, endpoint_ip = event.params.get( "peer_public_key", None), event.params.get("peer_endpoint_ip", None)
+            public_key, endpoint_ip = event.params.get("peer_public_key", None), event.params.get("peer_endpoint_ip", None)
             peer_info = self.wg_aux.get_peer_given_public_key(event, public_key, endpoint_ip)
 
             # 2. Stop Wireguard
@@ -172,7 +173,7 @@ class WGPeers:
             )
             self.wg_aux.execute_command(command)
 
-            m_wgconfig = wgconfig.WGConfig("/tmp/wireguard/wg.conf")
+            m_wgconfig = wgconfig.WGConfig(Constants.WG_CONFIG_LOCAL_FILEPATH)
             m_wgconfig.read_file()
 
             if action == "add":
@@ -216,7 +217,7 @@ class WGPeers:
             )
             self.wg_aux.execute_command(command)
 
-            m_wgconfig = wgconfig.WGConfig("/tmp/wireguard/wg.conf")
+            m_wgconfig = wgconfig.WGConfig(Constants.WG_CONFIG_LOCAL_FILEPATH)
             m_wgconfig.read_file()
             m_wgconfig.del_peer(peer_info["PublicKey"])
             m_wgconfig.write_file()

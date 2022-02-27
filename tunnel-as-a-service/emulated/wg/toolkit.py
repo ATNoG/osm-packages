@@ -4,7 +4,7 @@ from wg.aux import WGAux
 from wg.peers import WGPeers
 import wgconfig
 import os
-from command import Command
+from wg.command import Command
 import json
 
 

@@ -2,7 +2,7 @@ import json
 import logging
 import os
 import wgconfig
-from command import Command
+from wg.command import Command
 import wg.constants as Constants 
 
 # Logger
@@ -20,18 +20,21 @@ class WGBase:
         if self.tunnel_charm.model.unit.is_leader():
             commands = [
                 Command(
+                    None,
                     "sudo apt-get update",
                     "Updating packages...",
                     "Packages updated",
                     "Could not update packages!",
                 ),
                 Command(
+                    None,
                     "sudo apt install wireguard -y",
                     "Installing wireguard...",
                     "Wireguard installed",
                     "Could not install wireguard!",
                 ),
                 Command(
+                    None,
                     "sudo apt install net-tools -y",
                     "Installing net-tools...",
                     "net-tools installed",
@@ -49,6 +52,7 @@ class WGBase:
     def wireguard_version_check(self, event):
         if self.tunnel_charm.model.unit.is_leader():
             command = Command(
+                None,
                 "wg --version",
                 "Checking wireguard version...",
                 "Wireguard version is correct",
@@ -65,6 +69,7 @@ class WGBase:
         if self.tunnel_charm.model.unit.is_leader():
             commands = [
                 Command(
+                    None,
                     "wg genkey | sudo tee {} | wg pubkey | sudo tee {}".format(
                         Constants.PRIVATE_KEY_FILEPATH,
                         Constants.PUBLIC_KEY_FILEPATH
@@ -74,12 +79,14 @@ class WGBase:
                     "Could not create wireguard keys!",
                 ),
                 Command(
+                    None,
                     "sudo cat {}".format(Constants.PRIVATE_KEY_FILEPATH),
                     "Checking wireguard private key...",
                     "Checked wireguard private key",
                     "Could not validate wireguard private key!",
                 ),
                 Command(
+                    None,
                     "sudo cat {}".format(Constants.PUBLIC_KEY_FILEPATH),
                     "Checking wireguard public key...",
                     "Checked wireguard public key",
@@ -114,6 +121,7 @@ class WGBase:
             m_wgconfig = wgconfig.WGConfig(Constants.WG_CONFIG_LOCAL_FILEPATH)
 
             command = Command(
+                None,
                 "sudo cat {}".format(Constants.PRIVATE_KEY_FILEPATH),
                 "Obtaining wireguard private key...",
                 "Obtained wireguard private key",
@@ -139,6 +147,7 @@ class WGBase:
 
             # Allow IPv4 forwarding
             command = Command(
+                None,
                 "sudo sysctl -w net.ipv4.ip_forward=1",
                 "Allowing IPv4 forwarding on the VNF...",
                 "Allowed IPv4 forwarding on the VNF",
@@ -162,18 +171,21 @@ class WGBase:
         if self.tunnel_charm.model.unit.is_leader():
             commands = [
                 Command(
+                    None,
                     "sudo wg-quick down {} || true ".format(forward_interface),
                     "Stopping wireguard...",
                     "Wireguard stopped",
                     "Unable to stop wireguard!",
                 ),
                 Command(
+                    None,
                     "sudo wg-quick up {}".format(forward_interface),
                     "Starting wireguard...",
                     "Wireguard started",
                     "Unable to start wireguard!",
                 ),
                 Command(
+                    None,
                     "sudo wg show {}".format(forward_interface),
                     "Checking wireguard configuration...",
                     "Checked wireguard configuration",
