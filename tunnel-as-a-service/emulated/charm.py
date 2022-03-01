@@ -84,6 +84,9 @@ class TunnelCharm:
     def start_wireguard(self, event):
         return self.wg_toolkit.base.start_wireguard(event)
 
+    def get_wireguard_base_info(self, event):
+        return self.wg_toolkit.base.get_wireguard_base_info(event)
+
 
     def add_peer(self, event):
         return self.wg_toolkit.peers.add_peer(event)
@@ -118,6 +121,9 @@ class TunnelCharm:
     def get_ip_routes(self, event):
         return self.wg_toolkit.network_mgmt.get_ip_routes(event)
 
+<<<<<<< HEAD
+    
+=======
     def set_credentials(self,event):
         return self.wg_toolkit.openstack_mgmt.set_credentials(event)
     
@@ -130,6 +136,7 @@ class TunnelCharm:
     def add_address_pairs(self,event):
         return self.wg_toolkit.openstack_mgmt.add_address_pairs(event)
 
+>>>>>>> 29323274d753feee89d444594b1c328e35e36e41
 
 if __name__ == "__main__":
     tunnel_charm = TunnelCharm("ubuntu", "ubuntu", "10.0.12.107")
@@ -139,11 +146,11 @@ if __name__ == "__main__":
     #tunnel_charm.configuration_keygen(None)
     #tunnel_charm.wireguard_server_configuration(None)
     # Add Peer
-    #event = Event()
-    #event.add_param("peer_key", "U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
-    #event.add_param("peer_endpoint", "155.44.99.111:51820")
-    #event.add_param("allowed_networks", ["10.10.10.0/24", "10.10.11.0/24"])
-    #tunnel_charm.add_peer(event)
+    event = Event()
+    event.add_param("peer_key", "U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
+    event.add_param("peer_endpoint", "155.44.99.111:51820")
+    event.add_param("allowed_networks", "10.10.10.0/24,10.10.11.0/24")
+    tunnel_charm.add_peer(event)
     # Get VNF IPs
     #event = Event()
     #tunnel_charm.get_vnf_ip(event)
@@ -208,6 +215,11 @@ if __name__ == "__main__":
     #tunnel_charm.ip_route_management(event)
     #event.add_param("action", "delete")
     #tunnel_charm.ip_route_management(event)
+<<<<<<< HEAD
+    # Get WG Base Info
+    event = Event()
+    tunnel_charm.get_wireguard_base_info(event)
+=======
     
     #Set OpenStack Credentials
     # event = Event()
@@ -235,3 +247,4 @@ if __name__ == "__main__":
     # event.add_param('ip_address_list',['10.100.100.0/24','192.168.100.0/24'])
     # tunnel_charm.add_address_pairs(event)
 
+>>>>>>> 29323274d753feee89d444594b1c328e35e36e41

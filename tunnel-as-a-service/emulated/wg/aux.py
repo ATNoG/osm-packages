@@ -17,6 +17,7 @@ class WGAux:
     def execute_command(self, command):
         result, error = None, None
         #self.unit.status = MaintenanceStatus(initial_status)
+        print(str(command))
         logging.info(command.initial_status)
         try:
             proxy = self.tunnel_charm.get_ssh_proxy()
@@ -27,7 +28,8 @@ class WGAux:
             #self.unit.status = MaintenanceStatus(command.ok_status)
             return ret
         except Exception as e:
-            command.event.set_results({'output': "", "errors": "[{}] Action failed {}. Stderr: {}".format(command.command, e, error)})
+            if command.event is not None:
+                command.event.set_results({'output': "", "errors": "[{}] Action failed {}. Stderr: {}".format(command.command, e, error)})
             logging.error("[{}] Action failed {}. Stderr: {}".format(command.command, e, error))
             #self.unit.status = BlockedStatus(command.error_status)
             raise Exception("[{}] Action failed {}. Stderr: {}".format(command.command, e, error))
@@ -119,6 +121,7 @@ class WGAux:
             logging.error("Unable to update wireguard config on vnf")
             #self.unit.status = BlockedStatus(error_status)
             raise Exception(("Unable to update wireguard config on vnf"))
+
 
     def get_peer_given_public_key(self, event, public_key, endpoint_ip):
         if public_key is None and endpoint_ip is None:

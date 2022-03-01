@@ -1,6 +1,8 @@
 import json
 import logging
 import os
+
+from pyrsistent import v
 import wgconfig
 from wg.command import Command
 import wg.constants as Constants 
@@ -194,6 +196,45 @@ class WGBase:
             ]
             self.wg_aux.execute_commands_list(commands)
             #self.tunnel_charm.unit.status = ActiveStatus("<-replace->")
+            return True
+        else:
+            event.fail("Unit is not leader")
+
+
+    def get_wireguard_base_info(self, event):
+        if self.tunnel_charm.model.unit.is_leader():
+
+            # 1. Get public key
+            command = Command(
+                event,
+                "sudo cat {}".format(Constants.PUBLIC_KEY_FILEPATH),
+                "Checking wireguard public key...",
+                "Checked wireguard public key",
+                "Could not validate wireguard public key!",
+            )
+            
+            ret = self.wg_aux.execute_command(command)
+            public_key = ret["output"]
+
+            # 2. get address and list port
+            self.wg_aux.get_wg_config_to_local()
+
+            logging.info("Updating local wireguard configuration file")
+            m_wgconfig = wgconfig.WGConfig(Constants.WG_CONFIG_LOCAL_FILEPATH)
+            m_wgconfig.read_file()
+
+            interface_data = dict(m_wgconfig.interface)
+            result = json.dumps({
+                "address": interface_data["Address"],
+                "listen_port": interface_data["ListenPort"],
+                "public_key": public_key,
+    
+            })
+
+            logging.info("WG Base Info: {}".format(result))
+            event.set_results({'output': result, "errors": ""})
+
+            ##self.unit.status = ActiveStatus("<-replace->")
             return True
         else:
             event.fail("Unit is not leader")
