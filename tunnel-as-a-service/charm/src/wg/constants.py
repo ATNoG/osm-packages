@@ -1,0 +1,6 @@
+WG_CONFIG_LOCAL_DIR = "/tmp/wireguard"
+WG_CONFIG_LOCAL_FILEPATH = "/tmp/wireguard/wg.conf"
+VNF_WG_CONFIG_HOME_DIR = "~"
+VNF_WG_CONFIG_DESTINATION_DIR = "/etc/wireguard"
+PRIVATE_KEY_FILEPATH = "/etc/wireguard/privatekey"
+PUBLIC_KEY_FILEPATH = "/etc/wireguard/publickey"

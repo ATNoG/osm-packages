@@ -1,0 +1,161 @@
+# Actions to be implemented in src/charm.py
+configure-remote:
+  description: "Configures the remote server"
+  params:
+    destination_ip:
+      description: "IP of the remote server"
+      type: string
+      default: ""
+  required:
+    - destination_ip
+start-service:
+  description: "Starts the service of the VNF"
+
+
+# Standard OSM functions
+start:
+  description: "Start the service on the VNF."
+stop:
+  description: "Stop the service on the VNF."
+restart:
+  description: "Restart the service on the VNF."
+reboot:
+  description: "Reboot the VNF virtual machine."
+upgrade:
+  description: "Upgrade the software on the VNF."
+
+
+# Required by charms.osm.sshproxy
+run:
+  description: "Run an arbitrary command"
+  params:
+    command:
+      description: "The command to execute."
+      type: string
+      default: ""
+  required:
+    - command
+generate-ssh-key:
+  description: "Generate a new SSH keypair for this unit. This will replace any existing previously generated keypair."
+verify-ssh-credentials:
+  description: "Verify that this unit can authenticate with server specified by ssh-hostname and ssh-username."
+get-ssh-public-key:
+  description: "Get the public SSH key for this unit."
+
+
+# Custom actions
+# TESTED
+get-wireguard-base-info:
+  description: "Returns the WG's base info"
+
+# TESTED
+add-peer:
+  description: "Action that adds an allowed peer to the wireguard server"
+  params:
+    peer_endpoint:
+      description: "Public Endpoint of the peer"
+      type: string
+      default: ""
+    peer_public_key:
+      description: "Public key of the peer"
+      type: string
+      default: ""
+    allowed_networks:
+      description: "Networks to assign of the peer"
+      type: string
+  required:
+  - peer_endpoint
+  - peer_public_key
+
+# TESTED
+get-vnf-ip:
+  description: "Action that gets the VNF IPs, interface's MAC address and Gateway"
+
+# TESTED
+ip-route-management:
+  description: "Action that manages the routes on the wireguard server"
+  params:
+    network:
+      description: "Network that will be used in the route"
+      type: string
+      default: ""
+    action:
+      description: "Action that will be performed [add, delete]"
+      type: string
+      default: ""
+    gw_address:
+      description: "Gateway that will be used in the route"
+      type: string
+      default: ""
+  required:
+  - network
+  - action
+  - gw_address
+
+# TESTED
+get-peers:
+  description: "Action that gets all the peers of the wireguard server. This action can filter the peers given their public key OR endpoint IP"
+  params:
+    peer_public_key:
+      description: "Peer's Public Key"
+      type: string
+    peer_endpoint_ip:
+      description: "Peer's Endpoint IP"
+      type: string
+
+# TESTED
+update-peer-endpoint:
+  description: "Action that updates a peer endpoint IP"
+  params:
+    new_endpoint:
+      description: "New endpoint that will be attributed to the peer"
+      type: string
+    peer_public_key:
+      description: "Peer's Public Key"
+      type: string
+    peer_endpoint_ip:
+      description: "Peer's Endpoint IP"
+      type: string
+  required:
+  - new_endpoint
+
+# TESTED
+update-peer-allowed-ips:
+  description: "Action that updates a peer's allowed IPs"
+  params:
+    network:
+      description: "Network that will be added or deleted to the peer's allowed IPs"
+      type: string
+    action:
+      description: "Action that will be performed [add, delete]"
+      type: string
+      default: "add"
+    peer_public_key:
+      description: "Peer's Public Key"
+      type: string
+    peer_endpoint_ip:
+      description: "Peer's Endpoint IP"
+      type: string
+  required:
+  - network
+  - action
+
+delete-peer:
+  description: "Action that deletes a peer"
+  params:
+    peer_public_key:
+      description: "Peer's Public Key"
+      type: string
+    peer_endpoint_ip:
+      description: "Peer's Endpoint IP"
+      type: string
+
+# TESTED
+get-ip-routes:
+  description: "Get IP Routes of the wireguard server"
+
+
+#start-prometheus-exporter:
+#  description: "Start the Prometheus Node Exporter"
+#stop-prometheus-exporter:
+#  description: "Stop the Prometheus Node Exporter"

@@ -1,0 +1,15 @@
+name: prometheus-node-exporter
+summary: This charm enables the deployment of a prometheus exporter
+maintainer: Rafael Direito <rdireito@av.it.pt>
+description: |
+  This charm is part of a juju charms development tutorial.
+tags:
+  - nfv
+subordinate: false
+series:
+  - bionic
+  - xenial
+  - focal
+peers: # This will give HA capabilities to your Proxy Charm
+  proxypeer:
+    interface: proxypeer

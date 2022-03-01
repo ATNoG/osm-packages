@@ -1,0 +1,12 @@
+name: tunnel-as-a-service
+summary: This charm enables the deployment of a wireguard tunnnel + all the configurations required
+maintainer: Rafael Direito <rdireito@av.it.pt>
+description: |
+  Wireguard Tunnel
+subordinate: false
+series:
+  - bionic
+  - focal
+peers: # This will give HA capabilities to your Proxy Charm
+  proxypeer:
+    interface: proxypeer

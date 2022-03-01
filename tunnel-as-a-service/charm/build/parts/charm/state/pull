@@ -1,0 +1,45 @@
+assets:
+  source-details: null
+  stage-packages: null
+  stage-snaps: null
+directories: !!set {}
+files: !!set {}
+part-properties:
+  after: []
+  build-attributes: []
+  build-environment: []
+  build-packages: []
+  build-snaps: []
+  disable-parallel: false
+  organize: {}
+  override-build: null
+  override-prime: null
+  override-pull: null
+  override-stage: null
+  plugin: null
+  prime:
+  - src
+  - venv
+  - metadata.yaml
+  - dispatch
+  - hooks
+  - config.yaml
+  - actions.yaml
+  - lib
+  - mod
+  source: /root/project
+  source-branch: ''
+  source-checksum: ''
+  source-commit: ''
+  source-depth: 0
+  source-subdir: ''
+  source-tag: ''
+  source-type: ''
+  stage:
+  - '*'
+  stage-packages: []
+  stage-snaps: []
+project-options:
+  application_name: charmcraft
+  arch_triplet: x86_64-linux-gnu
+  target_arch: amd64
