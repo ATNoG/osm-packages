@@ -118,7 +118,17 @@ class TunnelCharm:
     def get_ip_routes(self, event):
         return self.wg_toolkit.network_mgmt.get_ip_routes(event)
 
+    def set_credentials(self,event):
+        return self.wg_toolkit.openstack_mgmt.set_credentials(event)
+    
+    def get_server_details(self,event):
+        return self.wg_toolkit.openstack_mgmt.get_server_details(event)
 
+    def get_server_ports(self,event):
+        return self.wg_toolkit.openstack_mgmt.get_server_ports(event)
+
+    def add_address_pairs(self,event):
+        return self.wg_toolkit.openstack_mgmt.add_address_pairs(event)
 
 
 if __name__ == "__main__":
@@ -198,3 +208,30 @@ if __name__ == "__main__":
     #tunnel_charm.ip_route_management(event)
     #event.add_param("action", "delete")
     #tunnel_charm.ip_route_management(event)
+    
+    #Set OpenStack Credentials
+    # event = Event()
+    # event.add_param("username",'')
+    # event.add_param('password','')
+    # event.add_param('user_domain_name','')    
+    # event.add_param('domain_name','')
+    # event.add_param('project_name','')
+    # event.add_param('host','')
+    # tunnel_charm.set_credentials(event)
+
+    # Get Server Details
+    # event = Event()
+    # event.add_param('server_id','26f4aec2-2148-43b9-9d9f-56e0c1d1c2cd')
+    # tunnel_charm.get_server_details(event)
+
+    # Get Server Interfaces
+    # event = Event()
+    # event.add_param('server_id','26f4aec2-2148-43b9-9d9f-56e0c1d1c2cd')
+    # tunnel_charm.get_server_ports(event)
+
+    # Add Address Pairs
+    # event = Event()
+    # event.add_param('ports_id_list',['955989fe-9864-4216-9f3a-1ea8f4710ced'])
+    # event.add_param('ip_address_list',['10.100.100.0/24','192.168.100.0/24'])
+    # tunnel_charm.add_address_pairs(event)
+
