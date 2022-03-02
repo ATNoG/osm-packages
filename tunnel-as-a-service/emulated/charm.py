@@ -118,6 +118,7 @@ class TunnelCharm:
     def get_ip_routes(self, event):
         return self.wg_toolkit.network_mgmt.get_ip_routes(event)
 
+    #Openstack management
     def set_credentials(self,event):
         return self.wg_toolkit.openstack_mgmt.set_credentials(event)
     
