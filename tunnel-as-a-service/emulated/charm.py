@@ -84,6 +84,9 @@ class TunnelCharm:
     def start_wireguard(self, event):
         return self.wg_toolkit.base.start_wireguard(event)
 
+    def get_wireguard_base_info(self, event):
+        return self.wg_toolkit.base.get_wireguard_base_info(event)
+
 
     def add_peer(self, event):
         return self.wg_toolkit.peers.add_peer(event)
@@ -140,11 +143,11 @@ if __name__ == "__main__":
     #tunnel_charm.configuration_keygen(None)
     #tunnel_charm.wireguard_server_configuration(None)
     # Add Peer
-    #event = Event()
-    #event.add_param("peer_key", "U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
-    #event.add_param("peer_endpoint", "155.44.99.111:51820")
-    #event.add_param("allowed_networks", ["10.10.10.0/24", "10.10.11.0/24"])
-    #tunnel_charm.add_peer(event)
+    event = Event()
+    event.add_param("peer_key", "U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
+    event.add_param("peer_endpoint", "155.44.99.111:51820")
+    event.add_param("allowed_networks", "10.10.10.0/24,10.10.11.0/24")
+    tunnel_charm.add_peer(event)
     # Get VNF IPs
     #event = Event()
     #tunnel_charm.get_vnf_ip(event)
@@ -209,6 +212,11 @@ if __name__ == "__main__":
     #tunnel_charm.ip_route_management(event)
     #event.add_param("action", "delete")
     #tunnel_charm.ip_route_management(event)
+
+
+    # Get WG Base Info
+    #event = Event()
+    #tunnel_charm.get_wireguard_base_info(event)
     
     #Set OpenStack Credentials
     # event = Event()

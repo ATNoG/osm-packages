@@ -21,7 +21,11 @@ class WGPeers:
         tunnel_address = self.tunnel_charm.model.config["tunnel_address"]
         peer_key = event.params["peer_key"]
         peer_endpoint = event.params["peer_endpoint"]
-        allowed_networks = event.params["allowed_networks"]
+        allowed_networks = event.params.get("allowed_networks", [])
+
+        if type(allowed_networks) != list:
+            allowed_networks = [net.strip()
+                                for net in list(allowed_networks.split(","))]
 
         if self.tunnel_charm.model.unit.is_leader():
 
@@ -213,7 +217,7 @@ class WGPeers:
         if self.tunnel_charm.model.unit.is_leader():
             forward_interface = self.tunnel_charm.model.config["forward_interface"]
 
-            public_key, endpoint_ip = event.params.get("peer_key", None), event.params.get("peer_endpoint_ip", None)
+            public_key, endpoint_ip = event.params.get("peer_public_key", None), event.params.get("peer_endpoint_ip", None)
             peer_info = self.wg_aux.get_peer_given_public_key(event, public_key, endpoint_ip)
 
             # 2. Stop Wireguard
