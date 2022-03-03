@@ -21,13 +21,12 @@ class WGPeers:
         tunnel_address = self.tunnel_charm.model.config["tunnel_address"]
         peer_key = event.params["peer_public_key"]
         peer_endpoint = event.params["peer_endpoint"]
-        allowed_networks = event.params.get("allowed_networks",[])
 
-        if type(allowed_networks) != list:
+        allowed_networks = []
+        if "allowed_networks" in event.params and event.params.get["allowed_networks"] != "null":
             allowed_networks = [net.strip() for net in list(allowed_networks.split(","))]
 
         if self.tunnel_charm.model.unit.is_leader():
-
             # 1. Stop Wireguard
             command = Command(
                 event,
