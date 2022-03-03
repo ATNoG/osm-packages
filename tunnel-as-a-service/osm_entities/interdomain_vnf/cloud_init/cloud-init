@@ -1,0 +1,11 @@
+#cloud-config
+manage_etc_hosts: True
+hostname: osmtunnel
+password: ubuntu
+chpasswd:
+  expire: False
+ssh_pwauth: True
+write_files:
+  - path: /tmp/test-1
+    content: |
+      cloudinited
