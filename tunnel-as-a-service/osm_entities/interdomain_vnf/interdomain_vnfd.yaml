@@ -60,8 +60,6 @@ vnfd:
               name: allowed_networks
               mandatory: false
               default-value: "null"
-              
-              
 
           - name: get-vnf-ip
             execution-environment-ref: configure-vnf
@@ -82,9 +80,11 @@ vnfd:
             - data-type: STRING
               name: peer_public_key
               mandatory: false
+              default-value: "null"
             - data-type: STRING
               name: peer_endpoint_ip
               mandatory: false
+              default-value: "null"
 
           - name: update-peer-endpoint
             execution-environment-ref: configure-vnf
@@ -94,9 +94,11 @@ vnfd:
             - data-type: STRING
               name: peer_public_key
               mandatory: false
+              default-value: "null"
             - data-type: STRING
               name: peer_endpoint_ip
               mandatory: false
+              default-value: "null"
 
           - name: update-peer-allowed-ips
             execution-environment-ref: configure-vnf
@@ -108,9 +110,11 @@ vnfd:
             - data-type: STRING
               name: peer_public_key
               mandatory: false
+              default-value: "null"
             - data-type: STRING
               name: peer_endpoint_ip
               mandatory: false
+              default-value: "null"
 
           - name: delete-peer
             execution-environment-ref: configure-vnf
@@ -118,9 +122,11 @@ vnfd:
             - data-type: STRING
               name: peer_public_key
               mandatory: false
+              default-value: "null"
             - data-type: STRING
               name: peer_endpoint_ip
               mandatory: false
+              default-value: "null"
 
           - name: get-ip-routes
             execution-environment-ref: configure-vnf

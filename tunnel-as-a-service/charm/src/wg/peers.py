@@ -95,10 +95,10 @@ class WGPeers:
             # 3. Get peers from wg config
             wg_existing_peers = m_wgconfig.peers
             result_peers = None
-            if "peer_public_key" in event.params:
+            if "peer_public_key" in event.params and event.params["peer_public_key"] != "null":
                 peer_public_key = event.params["peer_public_key"]
                 result_peers = wg_existing_peers.get(peer_public_key, None)
-            elif "peer_endpoint_ip" in event.params:
+            elif "peer_endpoint_ip" in event.params and event.params["peer_endpoint_ip"] != "null":
                 peer_endpoint_ip = event.params["peer_endpoint_ip"]
                 for peer_data in wg_existing_peers.values():
                     if peer_endpoint_ip in peer_data["Endpoint"]:
@@ -122,7 +122,11 @@ class WGPeers:
             new_endpoint = event.params["new_endpoint"]
 
             public_key, endpoint_ip = event.params.get("peer_public_key", None), event.params.get("peer_endpoint_ip", None)
-            peer_info = self.wg_aux.get_peer_given_public_key( event, public_key, endpoint_ip)
+            if public_key == "null":
+                public_key = None
+            if endpoint_ip == "null":
+                endpoint_ip = None
+            peer_info = self.wg_aux.get_peer_given_public_key(event, public_key, endpoint_ip)
 
             # 2. Stop Wireguard
             command = Command(
@@ -170,6 +174,10 @@ class WGPeers:
                 raise Exception( "Action not supported! Allowed actions = [add, delete]")
 
             public_key, endpoint_ip = event.params.get("peer_public_key", None), event.params.get("peer_endpoint_ip", None)
+            if public_key == "null":
+                public_key = None
+            if endpoint_ip == "null":
+                endpoint_ip = None
             peer_info = self.wg_aux.get_peer_given_public_key(event, public_key, endpoint_ip)
 
             # 2. Stop Wireguard
@@ -216,6 +224,10 @@ class WGPeers:
             forward_interface = self.tunnel_charm.model.config["forward_interface"]
 
             public_key, endpoint_ip = event.params.get("peer_public_key", None), event.params.get("peer_endpoint_ip", None)
+            if public_key == "null":
+                public_key = None
+            if endpoint_ip == "null":
+                endpoint_ip = None
             peer_info = self.wg_aux.get_peer_given_public_key(event, public_key, endpoint_ip)
 
             # 2. Stop Wireguard
