@@ -1,0 +1,3 @@
+peer_public_key: U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=
+peer_endpoint: 155.44.99.111:51820
+allowed_networks: 10.10.10.0/24,10.10.11.0/24
