@@ -176,6 +176,7 @@ if __name__ == "__main__":
     #event.add_param("peer_endpoint_ip", "155.44.99.111")
     #tunnel_charm.get_peers(event)
     # Update peers endpoint
+    # --- 
     #event = Event()
     #event.add_param("peer_public_key","U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
     #event.add_param("new_endpoint", "155.44.99.111:51823")
@@ -203,6 +204,7 @@ if __name__ == "__main__":
     #event = Event()
     #event.add_param("peer_key", "X5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
     #tunnel_charm.delete_peer(event)
+    #-----
     # Change ip routes
     #event = Event()
     #tunnel_charm.get_ip_routes(event)

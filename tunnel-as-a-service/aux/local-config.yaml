@@ -1,0 +1,6 @@
+# this parameters should be adapted to
+# the charateristics of your destination VM
+tunnel-as-a-service:
+        ssh-hostname: 10.0.12.106
+        ssh-username: ubuntu
+        ssh-password: ubuntu
