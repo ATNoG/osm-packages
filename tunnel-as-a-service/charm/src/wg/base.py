@@ -237,3 +237,42 @@ class WGBase:
             return True
         else:
             event.fail("Unit is not leader")
+
+
+    def update_wg_ip(self, event):
+        if self.tunnel_charm.model.unit.is_leader():
+            forward_interface = self.tunnel_charm.model.config["forward_interface"]
+            new_ip = event.params["wg_new_ip"]
+
+            # 1. Stop Wireguard
+            command = Command(
+                event,
+                "sudo wg-quick down {} || true ".format(forward_interface),
+                "Stopping wireguard...",
+                "Wireguard stopped",
+                "Unable to stop wireguard!",
+            )
+            self.wg_aux.execute_command(command)
+
+            m_wgconfig = wgconfig.WGConfig(Constants.WG_CONFIG_LOCAL_FILEPATH)
+            m_wgconfig.read_file()
+            m_wgconfig.del_attr(None, "Address")
+            m_wgconfig.add_attr(None, 'Address', new_ip)
+            m_wgconfig.write_file()
+            # 2. Update wireguard configuration file on VNF
+            self.wg_aux.update_wg_config_on_vnf()
+
+            command = Command(
+                event,
+                "sudo wg-quick up {}".format(forward_interface),
+                "Starting wireguard...",
+                "Wireguard started",
+                "Unable to start wireguard!",
+            )
+            self.wg_aux.execute_command(command)
+
+            event.set_results({'output': "Wireguard Peer Updated Configuration: " + str(m_wgconfig.interface), "errors": ""})
+            logging.info("Peer Updated Configuration:" + str(m_wgconfig.interface))
+            return True
+        else:
+            event.fail("Unit is not leader")

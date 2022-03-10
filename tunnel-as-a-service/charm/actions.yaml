@@ -140,6 +140,15 @@ update-peer-allowed-ips:
   - network
   - action
 
+update-wg-ip:
+  description: "Action that updates the wireguard IP"
+  params:
+    wg_new_ip:
+      description: "New IP of the Wireguard Server"
+      type: string    
+  required:
+  - wg_new_ip
+
 delete-peer:
   description: "Action that deletes a peer"
   params:

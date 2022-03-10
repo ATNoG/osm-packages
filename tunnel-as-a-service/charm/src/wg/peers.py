@@ -23,8 +23,8 @@ class WGPeers:
         peer_endpoint = event.params["peer_endpoint"]
 
         allowed_networks = []
-        if "allowed_networks" in event.params and event.params.get["allowed_networks"] != "null":
-            allowed_networks = [net.strip() for net in list(allowed_networks.split(","))]
+        if "allowed_networks" in event.params and event.params["allowed_networks"] != "null":
+            allowed_networks = [net.strip() for net in list(event.params["allowed_networks"].split(",")) if len(net.strip()) != 0]
 
         if self.tunnel_charm.model.unit.is_leader():
             # 1. Stop Wireguard
@@ -55,7 +55,7 @@ class WGPeers:
             m_wgconfig.add_attr(
                 peer_key,
                 'AllowedIPs',
-                ", ".join(allowed_networks + [tunnel_address])
+                ", ".join(allowed_networks)
             )
             m_wgconfig.add_attr(
                 peer_key,

@@ -99,6 +99,8 @@ class SampleProxyCharm(SSHProxyCharm):
         self.framework.observe(self.on.update_peer_allowed_ips_action, self.update_peer_allowed_ips)
         self.framework.observe(self.on.delete_peer_action, self.delete_peer)
         self.framework.observe(self.on.get_ip_routes_action, self.get_ip_routes)
+        self.framework.observe(self.on.update_wg_ip_action, self.update_wg_ip)
+
 
 
     def on_config_changed(self, event):
@@ -206,6 +208,9 @@ class SampleProxyCharm(SSHProxyCharm):
     
     def add_peer(self, event):
         return self.wg_toolkit.peers.add_peer(event)
+
+    def update_wg_ip(self, event):
+        return self.wg_toolkit.base.update_wg_ip(event)
 
 
     def get_vnf_ip(self, event):
