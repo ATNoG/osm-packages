@@ -10,10 +10,10 @@ nsd:
           - constituent-base-element-id: '1'
             constituent-cpd-id: interdomain-eth0-ext
           virtual-link-profile-id: mgmtnet
-        #- constituent-cpd-id:
-        #  - constituent-base-element-id: '1'
-        #    constituent-cpd-id: interdomain-eth1-ext
-        #  virtual-link-profile-id: datanet
+        - constituent-cpd-id:
+          - constituent-base-element-id: '1'
+            constituent-cpd-id: interdomain-eth1-ext
+          virtual-link-profile-id: datanet
         vnfd-id: interdomain-vnf
     id: interdomain-ns
     name: interdomain-ns
@@ -22,5 +22,7 @@ nsd:
     - id: mgmtnet
       mgmt-network: true
       vim-network-name: proj_net
+    - id: datanet
+      vim-network-name: datanet2
     vnfd-id:
     - interdomain-vnf
