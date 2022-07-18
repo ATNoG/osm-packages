@@ -1,1 +1,2 @@
 wgconfig == 0.2.2
+cryptography==36.0.1

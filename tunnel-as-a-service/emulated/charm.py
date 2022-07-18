@@ -1,5 +1,5 @@
 import sys
-
+import os
 sys.path.append(".")
 from osm_ssh_proxy import SSHProxy
 import logging
@@ -22,9 +22,9 @@ class Model():
         "listen_port": "51820",
         "save_config": "true",
         "forward_interface": "wg0",
-        "ssh-hostname": "10.0.12.107",
+        "ssh-hostname": "10.0.12.212",
         "username": "ubuntu",
-        "password": "ubuntu",
+        "password": "password",
         "vsi_id": "1",
     }
 class Unit():
@@ -32,6 +32,7 @@ class Unit():
         pass
     def is_leader(self):
         return True
+        
 class Event():
     params = {}
     def __init__(self):
@@ -121,33 +122,35 @@ class TunnelCharm:
     def get_ip_routes(self, event):
         return self.wg_toolkit.network_mgmt.get_ip_routes(event)
 
-    #Openstack management
-    def set_credentials(self,event):
-        return self.wg_toolkit.openstack_mgmt.set_credentials(event)
+
+    # Passwd Actions
+    def install_openstack_wrapper(self,event):
+        return self.wg_toolkit.pwdBase.install_openstack_wrapper(event)
+
+    def configure_key_gen(self,event):
+        return self.wg_toolkit.pwdBase.configure_key_gen(event)
+
+    def get_public_key(self,event):
+        return self.wg_toolkit.pwdBase.get_public_key(event)
     
-    def get_server_details(self,event):
-        return self.wg_toolkit.openstack_mgmt.get_server_details(event)
+    def add_address_pair(self,event):
+        return self.wg_toolkit.pwdBase.add_address_pair(event)
 
-    def get_server_ports(self,event):
-        return self.wg_toolkit.openstack_mgmt.get_server_ports(event)
-
-    def add_address_pairs(self,event):
-        return self.wg_toolkit.openstack_mgmt.add_address_pairs(event)
 
 
 if __name__ == "__main__":
-    tunnel_charm = TunnelCharm("ubuntu", "ubuntu", "10.0.12.107")
+    tunnel_charm = TunnelCharm("ubuntu", "password", "10.0.12.212")
     # Install wireguard and start thee tunnel
     #tunnel_charm.install_wg_packages(None)
     #tunnel_charm.wireguard_version_check(None)
     #tunnel_charm.configuration_keygen(None)
     #tunnel_charm.wireguard_server_configuration(None)
     # Add Peer
-    event = Event()
-    event.add_param("peer_key", "U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
-    event.add_param("peer_endpoint", "155.44.99.111:51820")
-    event.add_param("allowed_networks", "10.10.10.0/24,10.10.11.0/24")
-    tunnel_charm.add_peer(event)
+    # event = Event()
+    # event.add_param("peer_key", "U5H6wmmosBhVLLm1A1p/Hbx7M/hhtvpQ8D+20K0ORj0=")
+    # event.add_param("peer_endpoint", "155.44.99.111:51820")
+    # event.add_param("allowed_networks", "10.10.10.0/24,10.10.11.0/24")
+    # tunnel_charm.add_peer(event)
     # Get VNF IPs
     #event = Event()
     #tunnel_charm.get_vnf_ip(event)
@@ -220,29 +223,28 @@ if __name__ == "__main__":
     #event = Event()
     #tunnel_charm.get_wireguard_base_info(event)
     
-    #Set OpenStack Credentials
-    # event = Event()
-    # event.add_param("username",'')
-    # event.add_param('password','')
-    # event.add_param('user_domain_name','')    
-    # event.add_param('domain_name','')
-    # event.add_param('project_name','')
-    # event.add_param('host','')
-    # tunnel_charm.set_credentials(event)
+    
+    # Configure key pair
+    event = Event()
+    tunnel_charm.install_openstack_wrapper(event)
+    #tunnel_charm.configure_key_gen(event)
+    event = Event()
+    tunnel_charm.get_public_key(event)
+    username = b''
+    password = b''
+    user_domain_name = b''
+    domain_name = b''
+    project_name = b''
+    host = b''
+    event = Event()
+    event.add_param("username",username)
+    event.add_param('password', password)
+    event.add_param('user_domain_name',user_domain_name)  
+    event.add_param('domain_name',domain_name)
+    event.add_param('project_name',project_name)
+    event.add_param('host',host)
+    event.add_param('server_id','8b3ca827-f6bf-4065-add5-0341f78a2928')
+    event.add_param('address_pairs',"10.100.100.0/24, 192.168.100.0/24")
+    tunnel_charm.add_address_pair(event)
 
-    # Get Server Details
-    # event = Event()
-    # event.add_param('server_id','26f4aec2-2148-43b9-9d9f-56e0c1d1c2cd')
-    # tunnel_charm.get_server_details(event)
-
-    # Get Server Interfaces
-    # event = Event()
-    # event.add_param('server_id','26f4aec2-2148-43b9-9d9f-56e0c1d1c2cd')
-    # tunnel_charm.get_server_ports(event)
-
-    # Add Address Pairs
-    # event = Event()
-    # event.add_param('ports_id_list',['955989fe-9864-4216-9f3a-1ea8f4710ced'])
-    # event.add_param('ip_address_list',['10.100.100.0/24','192.168.100.0/24'])
-    # tunnel_charm.add_address_pairs(event)
 

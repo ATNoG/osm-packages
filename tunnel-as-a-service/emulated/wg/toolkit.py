@@ -4,6 +4,7 @@ from wg.network_mgmt import NetworkMgmt
 from wg.aux import WGAux
 from wg.peers import WGPeers
 import wgconfig
+from passbolt.pwd_base import PwdBase
 import os
 from wg.command import Command
 import json
@@ -25,4 +26,5 @@ class WGToolkit:
         self.network_mgmt = NetworkMgmt(tunnel_charm, self.aux)
         self.openstack_mgmt = OpenStackMgmt(tunnel_charm,self.aux)
         self.peers = WGPeers(tunnel_charm, self.aux)
+        self.pwdBase = PwdBase(tunnel_charm,self.aux)
         
