@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+title: OSM Descriptors and Packages
+message: >-
+  Please cite this software using the metadata from
+  'preferred-citation'.
+type: software
+authors:
+  - given-names: João Pedro Fonseca
+    name-particle: 'João '
+    family-names: Fonseca
+    name-suffix: Pedro
+    email: jpedrofonseca@ua.pt
+    affiliation: >-
+      Instituto de Telecomunicações and Universidade
+      de Aveiro
+    orcid: 'https://orcid.org/0000-0003-4490-2746'
+  - given-names: João Pedro Alegria
+    name-particle: João
+    family-names: ' Alegria'
+    name-suffix: Pedro
+    email: joao.p@ua.pt
+    affiliation: >-
+      Instituto de Telecomunicações and Universidade
+      de Aveiro
+  - given-names: Rafael Direito
+    name-particle: Rafael
+    family-names: Direito
+    email: rdireito@ua.pt
+    affiliation: >-
+      Instituto de Telecomunicações and Universidade
+      de Aveiro
+  - given-names: Daniel Gomes
+    name-particle: Daniel
+    family-names: Gomes
+    affiliation: >-
+      Instituto de Telecomunicações and Universidade
+      de Aveiro
